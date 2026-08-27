@@ -25,7 +25,8 @@ export const developers: Developer[] = [
     bio: 'A small automation studio building maintainable browser workflows.',
     bioVi: 'Nhóm tự động hóa xây dựng quy trình trình duyệt dễ bảo trì.',
     specialties: ['Browser automation', 'Node.js'],
-    avatar: '/images/icon.png',
+    avatar:
+      'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80',
     products: 3,
     views: 2090,
     orders: 355,
@@ -40,11 +41,11 @@ export const developers: Developer[] = [
     name: 'Data Foundry',
     headline: 'Practical data extraction tools',
     headlineVi: 'Công cụ trích xuất dữ liệu thực tiễn',
-    bio: 'Independent developers focused on useful document and marketplace data.',
-    bioVi:
-      'Nhóm lập trình viên tập trung vào dữ liệu tài liệu và sàn thương mại.',
+    bio: 'Independent sellers focused on useful document and marketplace data.',
+    bioVi: 'Nhóm người bán tập trung vào dữ liệu tài liệu và sàn thương mại.',
     specialties: ['Data extraction', 'Python'],
-    avatar: '/images/icon.png',
+    avatar:
+      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400&q=80',
     products: 2,
     views: 1400,
     orders: 182,
@@ -62,7 +63,8 @@ export const developers: Developer[] = [
     bio: 'Focused tools for release and listing operations.',
     bioVi: 'Công cụ tập trung cho theo dõi phát hành và vận hành danh sách.',
     specialties: ['Monitoring', 'Operations'],
-    avatar: '/images/icon.png',
+    avatar:
+      'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
     products: 2,
     views: 1230,
     orders: 108,
@@ -79,8 +81,9 @@ export const developers: Developer[] = [
     headlineVi: 'Công cụ tự động hóa cho công việc thực tế',
     bio: 'The HideAuto team publishes dependable automation building blocks.',
     bioVi: 'Đội ngũ HideAuto phát hành các công cụ tự động hóa đáng tin cậy.',
-    specialties: ['Automation', 'Developer tools'],
-    avatar: '/images/icon.png',
+    specialties: ['Automation', 'Automation tools'],
+    avatar:
+      'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80',
     products: 5,
     views: 3850,
     orders: 490,
@@ -95,11 +98,12 @@ export const developers: Developer[] = [
     name: 'Orbit Labs',
     headline: 'Structured operations helpers',
     headlineVi: 'Công cụ hỗ trợ vận hành có cấu trúc',
-    bio: 'A product-minded developer group for daily operations.',
+    bio: 'A product-minded seller group for daily operations.',
     bioVi:
       'Nhóm phát triển định hướng sản phẩm cho công việc vận hành hằng ngày.',
     specialties: ['Operations', 'Node.js'],
-    avatar: '/images/icon.png',
+    avatar:
+      'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80',
     products: 4,
     views: 980,
     orders: 96,
@@ -114,11 +118,12 @@ export const developers: Developer[] = [
     name: 'Pixel Data',
     headline: 'Clean data from complex pages',
     headlineVi: 'Dữ liệu sạch từ các trang phức tạp',
-    bio: 'Data-focused developer building concise extraction workflows.',
+    bio: 'Data-focused seller building concise extraction workflows.',
     bioVi:
-      'Developer tập trung dữ liệu xây dựng quy trình trích xuất gọn gàng.',
+      'Người bán tập trung dữ liệu xây dựng quy trình trích xuất gọn gàng.',
     specialties: ['Data extraction', 'Web'],
-    avatar: '/images/icon.png',
+    avatar:
+      'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80',
     products: 3,
     views: 740,
     orders: 65,

@@ -35,16 +35,13 @@ export default async function DeveloperPage({
       <main className="shell section developer-page">
         <p className="label">
           <Link href="/#developers">
-            <TranslatedText en="DEVELOPERS" vi="LẬP TRÌNH VIÊN" />
+            <TranslatedText en="SELLERS" vi="NGƯỜI BÁN" />
           </Link>{' '}
           / {developer.name.toUpperCase()}
         </p>
         <div className="developer-profile">
           <p className="label">
-            <TranslatedText
-              en="FEATURED DEVELOPER"
-              vi="LẬP TRÌNH VIÊN TIÊU BIỂU"
-            />
+            <TranslatedText en="FEATURED SELLER" vi="NGƯỜI BÁN TIÊU BIỂU" />
           </p>
           <h1>{developer.name}</h1>
           <p className="lead">

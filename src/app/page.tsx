@@ -4,8 +4,10 @@ import { AdSlot } from '@/features/advertising/ad-slot';
 import { scripts } from '@/features/catalog/data';
 import { ScriptListItem } from '@/features/catalog/script-list-item';
 import { developers } from '@/features/developers/data';
+import { SellerSummaryCard } from '@/features/developers/seller-summary-card';
 import { StoreHeader } from '@/shared/ui/store-header';
 import { StoreFooter } from '@/shared/ui/store-footer';
+import { Message } from '@/shared/ui/message';
 import { TranslatedText } from '@/shared/ui/translated-text';
 
 const rails = [
@@ -94,9 +96,12 @@ export default function Page() {
                 />
               </p>
               <h1>
-                Scripts that make
+                <Message id="home.heroLineOne" />
                 <br />
-                repetitive work <em>reliable.</em>
+                <Message id="home.heroLineTwo" />{' '}
+                <em>
+                  <Message id="home.heroEmphasis" />
+                </em>
               </h1>
               <p className="lead">
                 <TranslatedText
@@ -112,7 +117,9 @@ export default function Page() {
               </div>
             </div>
             <div className="hero-featured">
-              <p className="label">FEATURED SCRIPTS</p>
+              <p className="label">
+                <Message id="home.featuredScripts" />
+              </p>
               {scripts.slice(0, 4).map((script) => (
                 <ScriptListItem key={script.slug} script={script} />
               ))}
@@ -125,43 +132,38 @@ export default function Page() {
         </div>
         <ScriptRail {...rails[1]} />
         <div className="shell">
-          <AdSlot slotId="home-between-rails" compact />
+          <AdSlot slotId="home-between-rails" />
         </div>
         <ScriptRail {...rails[2]} />
         <ScriptRail {...rails[3]} />
         <section className="shell section" id="developers">
           <div className="heading">
             <div>
-              <p className="label">06 / COMMUNITY</p>
+              <p className="label">
+                06 / <Message id="home.community" />
+              </p>
               <h2>
                 <TranslatedText
-                  en="Featured developers."
-                  vi="Lập trình viên tiêu biểu."
+                  en="Featured sellers."
+                  vi="Người bán tiêu biểu."
                 />
               </h2>
             </div>
+            <Link href="/developers">
+              <Message id="seller.viewAll" /> <ArrowRight size={15} />
+            </Link>
           </div>
-          <div className="collections">
-            {developers.map((developer) => (
-              <Link href={`/developers/${developer.slug}`} key={developer.slug}>
-                <Check size={20} />
-                <div>
-                  <h3>{developer.name}</h3>
-                  <p>
-                    <TranslatedText
-                      en={developer.headline}
-                      vi={developer.headlineVi}
-                    />
-                  </p>
-                </div>
-                <ArrowRight size={16} />
-              </Link>
+          <div className="seller-summary-grid">
+            {developers.slice(0, 3).map((seller) => (
+              <SellerSummaryCard key={seller.slug} seller={seller} />
             ))}
           </div>
         </section>
         <section className="shell delivery" id="docs">
           <div>
-            <p className="label">07 / CLEAR DELIVERY</p>
+            <p className="label">
+              07 / <Message id="home.clearDelivery" />
+            </p>
             <h2>
               <TranslatedText
                 en="What happens after you contact a seller."
@@ -199,7 +201,7 @@ export default function Page() {
           </ol>
         </section>
         <div className="shell footer-ad">
-          <AdSlot slotId="home-footer" compact />
+          <AdSlot slotId="home-footer" />
         </div>
       </main>
       <StoreFooter />

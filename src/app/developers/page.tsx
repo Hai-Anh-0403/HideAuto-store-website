@@ -7,17 +7,14 @@ export default function DevelopersPage() {
       <StoreHeader />
       <main className="shell section developer-directory-page">
         <p className="label">
-          <TranslatedText
-            en="DEVELOPERS / DIRECTORY"
-            vi="LẬP TRÌNH VIÊN / DANH SÁCH"
-          />
+          <TranslatedText en="SELLERS / DIRECTORY" vi="NGƯỜI BÁN / DANH SÁCH" />
         </p>
         <div className="heading">
           <div>
             <h1>
               <TranslatedText
-                en="Meet the developers."
-                vi="Gặp gỡ các lập trình viên."
+                en="Meet the sellers."
+                vi="Gặp gỡ các người bán."
               />
             </h1>
           </div>

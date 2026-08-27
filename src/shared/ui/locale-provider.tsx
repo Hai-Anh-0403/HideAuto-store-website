@@ -7,12 +7,18 @@ import {
   useEffect,
   useSyncExternalStore,
 } from 'react';
+import {
+  formatMessage,
+  type MessageValues,
+} from '@/shared/i18n/format-message';
+import { messages, type MessageKey } from '@/shared/i18n/messages';
 
 export const localeLabels = { en: 'English', vi: 'Tiếng Việt' } as const;
 export type Locale = keyof typeof localeLabels;
 const LocaleContext = createContext<{
   locale: Locale;
   setLocale: (locale: Locale) => void;
+  t: (key: MessageKey, values?: MessageValues) => string;
 } | null>(null);
 
 function getStoredLocale(): Locale {
@@ -43,11 +49,18 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
     document.documentElement.lang = next;
     window.dispatchEvent(new Event('localechange'));
   };
+  const t = (key: MessageKey, values?: MessageValues) => {
+    const localized = messages[locale][key] ?? messages.en[key];
+    if (process.env.NODE_ENV !== 'production' && !messages[locale][key]) {
+      console.warn(`Missing ${locale} translation for "${key}".`);
+    }
+    return formatMessage(localized, values);
+  };
   useEffect(() => {
     document.documentElement.lang = locale;
   }, [locale]);
   return (
-    <LocaleContext.Provider value={{ locale, setLocale }}>
+    <LocaleContext.Provider value={{ locale, setLocale, t }}>
       {children}
     </LocaleContext.Provider>
   );

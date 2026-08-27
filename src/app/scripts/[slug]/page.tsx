@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { Check, MessageCircle } from 'lucide-react';
+import { AdSlot } from '@/features/advertising/ad-slot';
 import { scripts } from '@/features/catalog/data';
 import { TranslatedText } from '@/shared/ui/translated-text';
 import { StoreHeader } from '@/shared/ui/store-header';
@@ -124,6 +125,7 @@ export default async function ScriptPage({
             </small>
           </aside>
         </div>
+        <AdSlot slotId="script-detail-after-description" />
       </main>
     </>
   );

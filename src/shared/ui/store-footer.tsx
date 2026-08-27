@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { TranslatedText } from './translated-text';
+import { Message } from './message';
 
 export function StoreFooter() {
   return (
@@ -8,43 +8,48 @@ export function StoreFooter() {
         <div className="footer-brand">
           <p className="label">HIDEAUTO / SCRIPT STORE</p>
           <p>
-            <TranslatedText
-              en="Practical automation scripts with clear requirements and direct seller contact."
-              vi="Kịch bản tự động hóa thiết thực với yêu cầu rõ ràng và liên hệ trực tiếp người bán."
-            />
+            <Message id="footer.description" />
           </p>
         </div>
         <div className="footer-links">
           <div>
             <p className="label">
-              <TranslatedText en="DISCOVER" vi="KHÁM PHÁ" />
+              <Message id="footer.discover" />
             </p>
             <Link href="/scripts">
-              <TranslatedText en="Browse scripts" vi="Khám phá kịch bản" />
+              <Message id="footer.browseScripts" />
             </Link>
             <Link href="/developers">
-              <TranslatedText en="Hire a Developer" vi="Thuê lập Deverloper" />
+              <Message id="navigation.sellers" />
             </Link>
           </div>
           <div>
             <p className="label">
-              <TranslatedText en="RESOURCES" vi="TÀI NGUYÊN" />
+              <Message id="footer.resources" />
             </p>
             <Link href="/#docs">
-              <TranslatedText en="Documentation" vi="Tài liệu" />
+              <Message id="footer.documentation" />
             </Link>
             <Link href="/contact">
-              <TranslatedText en="Contact seller" vi="Liên hệ người bán" />
+              <Message id="footer.contactSeller" />
+            </Link>
+          </div>
+          <div>
+            <p className="label">
+              <Message id="footer.policies" />
+            </p>
+            <Link href="/legal/policies">
+              <Message id="footer.policies" />
+            </Link>
+            <Link href="/legal/terms">
+              <Message id="footer.terms" />
             </Link>
           </div>
         </div>
       </div>
       <div className="shell footer-bottom">
         <span>
-          <TranslatedText
-            en="DIRECT SELLER CONTACT · NO CHECKOUT"
-            vi="LIÊN HỆ TRỰC TIẾP · KHÔNG THANH TOÁN"
-          />
+          <Message id="footer.directContact" />
         </span>
         <span>© 2026 HIDEAUTO</span>
       </div>

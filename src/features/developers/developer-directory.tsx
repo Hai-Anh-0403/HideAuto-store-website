@@ -1,10 +1,13 @@
 'use client';
 import { Search } from 'lucide-react';
 import { useState } from 'react';
+import { AdSlot } from '@/features/advertising/ad-slot';
+import { useLocale } from '@/shared/ui/locale-provider';
 import { developers } from './data';
 import { DeveloperCard } from './developer-card';
 
 export function DeveloperDirectory() {
+  const { t } = useLocale();
   const [query, setQuery] = useState('');
   const [page, setPage] = useState(1);
   const items = developers.filter((developer) =>
@@ -24,8 +27,8 @@ export function DeveloperDirectory() {
             setQuery(event.target.value);
             setPage(1);
           }}
-          placeholder="Search developers or specialties"
-          aria-label="Search developers"
+          placeholder={t('seller.searchPlaceholder')}
+          aria-label={t('seller.searchPlaceholder')}
         />
       </div>
       <div className="developer-cards">
@@ -33,6 +36,7 @@ export function DeveloperDirectory() {
           <DeveloperCard key={developer.slug} developer={developer} />
         ))}
       </div>
+      <AdSlot slotId="developers-after-directory" />
       {totalPages > 1 && (
         <div className="pager">
           {Array.from({ length: totalPages }, (_, index) => (

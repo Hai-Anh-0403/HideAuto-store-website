@@ -3,17 +3,27 @@
 import { Search, SlidersHorizontal, X } from 'lucide-react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useMemo, useState } from 'react';
+import { AdSlot } from '@/features/advertising/ad-slot';
+import { platformsForScript, scriptPlatforms } from '@/data/script-platforms';
+import { useLocale } from '@/shared/ui/locale-provider';
 import { scripts } from './data';
 import { ScriptListItem } from './script-list-item';
 
+const statusMessageIds = {
+  MAINTAINED: 'scriptStatus.maintained',
+  NEW: 'scriptStatus.new',
+  POPULAR: 'scriptStatus.popular',
+} as const;
+
 const categories = ['Automation', 'Data', 'Operations'];
-const platforms = ['Browser', 'Web', 'Files'];
-const runtimes = ['Node', 'Python'];
+const socialPlatforms = [
+  ...new Set(Object.values(scriptPlatforms).flat()),
+].sort();
 const statuses = ['MAINTAINED', 'NEW', 'POPULAR'];
-const sellers = ['Northstar Automation', 'Data Foundry', 'Signal Workshop'];
 const priceBands = ['Under $25', '$25–$34', '$35 and above'];
 
 export function CatalogBrowser() {
+  const { t } = useLocale();
   const router = useRouter();
   const pathname = usePathname();
   const params = useSearchParams();
@@ -22,10 +32,8 @@ export function CatalogBrowser() {
   const values = {
     q: params.get('q')?.toLowerCase() ?? '',
     category: params.get('category') ?? '',
-    platform: params.get('platform') ?? '',
-    runtime: params.get('runtime') ?? '',
+    socialPlatform: params.get('socialPlatform') ?? '',
     status: params.get('status') ?? '',
-    seller: params.get('seller') ?? '',
     price: params.get('price') ?? '',
     sort: params.get('sort') ?? 'views',
   };
@@ -33,6 +41,8 @@ export function CatalogBrowser() {
     const next = new URLSearchParams(params.toString());
     if (value) next.set(key, value);
     else next.delete(key);
+    next.delete('platform');
+    next.delete('seller');
     next.delete('page');
     router.replace(`${pathname}?${next.toString()}`);
   };
@@ -46,7 +56,7 @@ export function CatalogBrowser() {
         .filter(
           (script) =>
             !values.q ||
-            `${script.name} ${script.outcome} ${script.seller} ${script.category} ${script.platform} ${script.runtime}`
+            `${script.name} ${script.outcome} ${script.seller} ${script.category} ${script.platform} ${platformsForScript(script.slug).join(' ')}`
               .toLowerCase()
               .includes(values.q),
         )
@@ -54,14 +64,11 @@ export function CatalogBrowser() {
           (script) => !values.category || script.category === values.category,
         )
         .filter(
-          (script) => !values.platform || script.platform === values.platform,
-        )
-        .filter(
           (script) =>
-            !values.runtime || script.runtime.startsWith(values.runtime),
+            !values.socialPlatform ||
+            platformsForScript(script.slug).includes(values.socialPlatform),
         )
         .filter((script) => !values.status || script.status === values.status)
-        .filter((script) => !values.seller || script.seller === values.seller)
         .filter((script) => {
           const price = Number(script.price.slice(1));
           return (
@@ -82,11 +89,9 @@ export function CatalogBrowser() {
         ),
     [
       values.category,
-      values.platform,
       values.price,
       values.q,
-      values.runtime,
-      values.seller,
+      values.socialPlatform,
       values.sort,
       values.status,
     ],
@@ -99,6 +104,7 @@ export function CatalogBrowser() {
     name: keyof typeof values,
     label: string,
     options: string[],
+    optionLabel = (option: string) => option,
   ) => (
     <fieldset>
       <legend>{label}</legend>
@@ -110,7 +116,7 @@ export function CatalogBrowser() {
             checked={values[name] === option}
             onChange={() => update(name, values[name] === option ? '' : option)}
           />
-          {option}
+          {optionLabel(option)}
         </label>
       ))}
     </fieldset>
@@ -118,10 +124,8 @@ export function CatalogBrowser() {
   const chips = [
     ['q', values.q],
     ['category', values.category],
-    ['platform', values.platform],
-    ['runtime', values.runtime],
+    ['socialPlatform', values.socialPlatform],
     ['status', values.status],
-    ['seller', values.seller],
     ['price', values.price],
   ] as const;
 
@@ -132,11 +136,11 @@ export function CatalogBrowser() {
         <input
           value={draft}
           onChange={(event) => setDraft(event.target.value)}
-          placeholder="Search task, seller, platform, or runtime"
-          aria-label="Search scripts"
+          placeholder={t('catalog.searchPlaceholder')}
+          aria-label={t('navigation.searchScripts')}
         />
         <button className="primary" type="submit">
-          Search
+          {t('catalog.search')}
         </button>
       </form>
       <div className="catalog-layout">
@@ -146,38 +150,40 @@ export function CatalogBrowser() {
         >
           <div className="filter-title">
             <SlidersHorizontal size={16} />
-            <strong>Filters</strong>
+            <strong>{t('catalog.filters')}</strong>
             <button type="button" onClick={clear}>
-              Clear all
+              {t('catalog.clearAll')}
             </button>
             <button
               className="filter-close"
               type="button"
               onClick={() => setFiltersOpen(false)}
-              aria-label="Close filters"
+              aria-label={t('catalog.closeFilters')}
             >
               <X size={16} />
             </button>
           </div>
           {filter('category', 'Category', categories)}
-          {filter('platform', 'Platform', platforms)}
-          {filter('runtime', 'Runtime', runtimes)}
-          {filter('status', 'Status', statuses)}
-          {filter('seller', 'Seller', sellers)}
+          {filter(
+            'socialPlatform',
+            t('catalog.socialPlatforms'),
+            socialPlatforms,
+          )}
+          {filter('status', t('catalog.status'), statuses, (status) =>
+            t(statusMessageIds[status as keyof typeof statusMessageIds]),
+          )}
           {filter('price', 'Starting price', priceBands)}
           <button
             className="filter-results primary"
             type="button"
             onClick={() => setFiltersOpen(false)}
           >
-            Show {results.length} results
+            {t('catalog.showResults', { count: results.length })}
           </button>
         </aside>
         <section className="catalog-results">
           <div className="catalog-toolbar">
-            <p>
-              <b>{results.length}</b> scripts found
-            </p>
+            <p>{t('catalog.resultsFound', { count: results.length })}</p>
             <button
               className="mobile-filter-button"
               type="button"
@@ -185,18 +191,18 @@ export function CatalogBrowser() {
               aria-controls="catalog-filters"
               aria-expanded={filtersOpen}
             >
-              <SlidersHorizontal size={15} /> Filters
+              <SlidersHorizontal size={15} /> {t('catalog.filters')}
             </button>
             <label>
-              Sort{' '}
+              {t('catalog.sort')}{' '}
               <select
                 value={values.sort}
                 onChange={(event) => update('sort', event.target.value)}
               >
-                <option value="views">Top views</option>
-                <option value="newest">Newest</option>
-                <option value="watched">Most watched</option>
-                <option value="updated">Recently updated</option>
+                <option value="views">{t('catalog.topViews')}</option>
+                <option value="newest">{t('catalog.newest')}</option>
+                <option value="watched">{t('catalog.mostWatched')}</option>
+                <option value="updated">{t('catalog.recentlyUpdated')}</option>
               </select>
             </label>
           </div>
@@ -212,7 +218,9 @@ export function CatalogBrowser() {
                         update(name, '');
                       }}
                     >
-                      {name === 'q' ? `Search: ${value}` : value}{' '}
+                      {name === 'q'
+                        ? t('catalog.searchChip', { value })
+                        : value}{' '}
                       <X size={12} />
                     </button>
                   ),
@@ -227,15 +235,14 @@ export function CatalogBrowser() {
             </div>
           ) : (
             <div className="catalog-empty">
-              <h2>No scripts match this search.</h2>
-              <p>
-                Try a broader phrase, or remove filters to see more scripts.
-              </p>
+              <h2>{t('catalog.noMatchTitle')}</h2>
+              <p>{t('catalog.noMatchDescription')}</p>
               <button className="secondary" onClick={clear}>
-                Clear filters
+                {t('catalog.clearFilters')}
               </button>
             </div>
           )}
+          <AdSlot slotId="catalog-after-results" />
         </section>
       </div>
     </div>

@@ -9,6 +9,10 @@ export const scriptPlatforms: Record<string, string[]> = {
   'queue-keeper': ['Facebook', 'YouTube'],
 };
 
+export function platformsForScript(slug: string) {
+  return scriptPlatforms[slug] ?? [];
+}
+
 export function platformLabel(slug: string) {
-  return scriptPlatforms[slug]?.join(' · ') ?? 'Multi-platform';
+  return platformsForScript(slug).join(' · ') || 'Multi-platform';
 }

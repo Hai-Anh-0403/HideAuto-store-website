@@ -30,7 +30,8 @@ export const scripts: CatalogScript[] = [
     platform: 'Browser',
     views: 1220,
     watches: 186,
-    image: '/images/script-automation.png',
+    image:
+      'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80',
   },
   {
     slug: 'catalog-watcher',
@@ -46,7 +47,8 @@ export const scripts: CatalogScript[] = [
     platform: 'Web',
     views: 980,
     watches: 230,
-    image: '/images/script-automation.png',
+    image:
+      'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80',
   },
   {
     slug: 'invoice-extractor',
@@ -62,7 +64,8 @@ export const scripts: CatalogScript[] = [
     platform: 'Files',
     views: 640,
     watches: 144,
-    image: '/images/script-automation.png',
+    image:
+      'https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=800&q=80',
   },
   {
     slug: 'release-notifier',
@@ -78,7 +81,8 @@ export const scripts: CatalogScript[] = [
     platform: 'Web',
     views: 510,
     watches: 173,
-    image: '/images/script-automation.png',
+    image:
+      'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=800&q=80',
   },
   {
     slug: 'form-runner',
@@ -94,7 +98,8 @@ export const scripts: CatalogScript[] = [
     platform: 'Browser',
     views: 870,
     watches: 119,
-    image: '/images/script-automation.png',
+    image:
+      'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80',
   },
   {
     slug: 'document-sorter',
@@ -110,7 +115,8 @@ export const scripts: CatalogScript[] = [
     platform: 'Files',
     views: 760,
     watches: 204,
-    image: '/images/script-automation.png',
+    image:
+      'https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=800&q=80',
   },
   {
     slug: 'listing-auditor',
@@ -126,7 +132,8 @@ export const scripts: CatalogScript[] = [
     platform: 'Web',
     views: 720,
     watches: 101,
-    image: '/images/script-automation.png',
+    image:
+      'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80',
   },
   {
     slug: 'queue-keeper',
@@ -142,6 +149,7 @@ export const scripts: CatalogScript[] = [
     platform: 'Browser',
     views: 430,
     watches: 154,
-    image: '/images/script-automation.png',
+    image:
+      'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80',
   },
 ];

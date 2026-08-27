@@ -1,13 +1,16 @@
 import Link from 'next/link';
 import { StoreHeader } from '@/shared/ui/store-header';
 import { TranslatedText } from '@/shared/ui/translated-text';
+import { Message } from '@/shared/ui/message';
 
 export default function NotFound() {
   return (
     <>
       <StoreHeader />
       <main className="shell section system-page">
-        <p className="label">404 / NOT FOUND</p>
+        <p className="label">
+          <Message id="system.notFoundLabel" />
+        </p>
         <h1>
           <TranslatedText
             en="This page is no longer here."
@@ -16,8 +19,8 @@ export default function NotFound() {
         </h1>
         <p className="lead">
           <TranslatedText
-            en="The script or developer may have moved, been retired, or the address may be incorrect."
-            vi="Kịch bản hoặc developer có thể đã được chuyển, ngừng phát hành, hoặc địa chỉ không chính xác."
+            en="The script or seller may have moved, been retired, or the address may be incorrect."
+            vi="Kịch bản hoặc người bán có thể đã được chuyển, ngừng phát hành, hoặc địa chỉ không chính xác."
           />
         </p>
         <div className="actions">

@@ -3,6 +3,7 @@ import { CatalogBrowser } from '@/features/catalog/catalog-browser';
 import { StoreHeader } from '@/shared/ui/store-header';
 import { StoreFooter } from '@/shared/ui/store-footer';
 import { TranslatedText } from '@/shared/ui/translated-text';
+import { Message } from '@/shared/ui/message';
 
 export default function ScriptsPage() {
   return (
@@ -25,13 +26,19 @@ export default function ScriptsPage() {
             </h1>
             <p className="catalog-intro">
               <TranslatedText
-                en="Search all scripts, then narrow the list by category, platform, runtime, and status."
-                vi="Tìm tất cả kịch bản, sau đó lọc theo danh mục, nền tảng, môi trường chạy và trạng thái."
+                en="Search all scripts, then narrow the list by category, platform, social platform, and status."
+                vi="Tìm tất cả kịch bản, sau đó lọc theo danh mục, nền tảng, mạng xã hội và trạng thái."
               />
             </p>
           </div>
         </div>
-        <Suspense fallback={<p className="label">LOADING CATALOG…</p>}>
+        <Suspense
+          fallback={
+            <p className="label">
+              <Message id="system.loadingCatalog" />
+            </p>
+          }
+        >
           <CatalogBrowser />
         </Suspense>
       </main>

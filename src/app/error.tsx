@@ -4,11 +4,11 @@ import Link from 'next/link';
 import { useLocale } from '@/shared/ui/locale-provider';
 
 export default function ErrorPage({ reset }: { reset: () => void }) {
-  const { locale } = useLocale();
+  const { locale, t } = useLocale();
   const vi = locale === 'vi';
   return (
     <main className="shell section system-page">
-      <p className="label">SYSTEM / ERROR</p>
+      <p className="label">{t('system.errorLabel')}</p>
       <h1>{vi ? 'Không thể tải nội dung này.' : 'Something did not load.'}</h1>
       <p className="lead">
         {vi
