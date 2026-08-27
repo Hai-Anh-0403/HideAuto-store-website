@@ -1,69 +1,208 @@
-import Image from "next/image";
+import { ArrowRight, Check } from 'lucide-react';
+import Link from 'next/link';
+import { AdSlot } from '@/features/advertising/ad-slot';
+import { scripts } from '@/features/catalog/data';
+import { ScriptListItem } from '@/features/catalog/script-list-item';
+import { developers } from '@/features/developers/data';
+import { StoreHeader } from '@/shared/ui/store-header';
+import { StoreFooter } from '@/shared/ui/store-footer';
+import { TranslatedText } from '@/shared/ui/translated-text';
 
-export default function Home() {
+const rails = [
+  {
+    label: '02',
+    title: 'Top views',
+    titleVi: 'Xem nhiều nhất',
+    sort: 'views',
+    items: [...scripts].sort((a, b) => b.views - a.views).slice(0, 6),
+  },
+  {
+    label: '03',
+    title: 'Newest',
+    titleVi: 'Mới nhất',
+    sort: 'newest',
+    items: [...scripts]
+      .sort((a, b) => b.updated.localeCompare(a.updated))
+      .slice(0, 6),
+  },
+  {
+    label: '04',
+    title: 'Most watched',
+    titleVi: 'Được quan tâm nhất',
+    sort: 'watched',
+    items: [...scripts].sort((a, b) => b.watches - a.watches).slice(0, 6),
+  },
+  {
+    label: '05',
+    title: 'Recently updated',
+    titleVi: 'Cập nhật gần đây',
+    sort: 'updated',
+    items: [...scripts]
+      .sort((a, b) => b.updated.localeCompare(a.updated))
+      .slice(0, 6),
+  },
+];
+
+function ScriptRail({
+  label,
+  title,
+  titleVi,
+  sort,
+  items,
+}: (typeof rails)[number]) {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <section className="shell section script-rail">
+      <div className="heading">
+        <div>
+          <p className="label">{label} / DISCOVER SCRIPTS</p>
+          <h2>
+            <TranslatedText en={title} vi={titleVi} />
+          </h2>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+        <Link href={`/scripts?sort=${sort}`}>
+          <TranslatedText en="View all" vi="Xem tất cả" />{' '}
+          <ArrowRight size={15} />
+        </Link>
+      </div>
+      <div className="script-list-grid">
+        {items.map((script) => (
+          <ScriptListItem key={script.slug} script={script} />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+export default function Page() {
+  return (
+    <>
+      <a className="skip" href="#main">
+        Skip to main content
+      </a>
+      <StoreHeader />
+      <main id="main">
+        <section className="shell hero">
+          <p className="label">
+            01 / <TranslatedText en="SCRIPT MARKETPLACE" vi="CHỢ KỊCH BẢN" />
+          </p>
+          <div className="hero-grid frame">
+            <div>
+              <p className="label">
+                <TranslatedText
+                  en="AUTOMATION / DIRECT CONTACT"
+                  vi="TỰ ĐỘNG HÓA / LIÊN HỆ TRỰC TIẾP"
+                />
+              </p>
+              <h1>
+                Scripts that make
+                <br />
+                repetitive work <em>reliable.</em>
+              </h1>
+              <p className="lead">
+                <TranslatedText
+                  en="Find practical automation tools, compare the requirements, then contact the seller directly to discuss delivery."
+                  vi="Tìm công cụ tự động hóa thiết thực, so sánh yêu cầu rồi liên hệ trực tiếp người bán để trao đổi."
+                />
+              </p>
+              <div className="actions">
+                <Link className="primary" href="/scripts">
+                  <TranslatedText en="Browse scripts" vi="Khám phá kịch bản" />{' '}
+                  <ArrowRight size={16} />
+                </Link>
+              </div>
+            </div>
+            <div className="hero-featured">
+              <p className="label">FEATURED SCRIPTS</p>
+              {scripts.slice(0, 4).map((script) => (
+                <ScriptListItem key={script.slug} script={script} />
+              ))}
+            </div>
+          </div>
+        </section>
+        <ScriptRail {...rails[0]} />
+        <div className="shell">
+          <AdSlot slotId="home-after-top-views" />
+        </div>
+        <ScriptRail {...rails[1]} />
+        <div className="shell">
+          <AdSlot slotId="home-between-rails" compact />
+        </div>
+        <ScriptRail {...rails[2]} />
+        <ScriptRail {...rails[3]} />
+        <section className="shell section" id="developers">
+          <div className="heading">
+            <div>
+              <p className="label">06 / COMMUNITY</p>
+              <h2>
+                <TranslatedText
+                  en="Featured developers."
+                  vi="Lập trình viên tiêu biểu."
+                />
+              </h2>
+            </div>
+          </div>
+          <div className="collections">
+            {developers.map((developer) => (
+              <Link href={`/developers/${developer.slug}`} key={developer.slug}>
+                <Check size={20} />
+                <div>
+                  <h3>{developer.name}</h3>
+                  <p>
+                    <TranslatedText
+                      en={developer.headline}
+                      vi={developer.headlineVi}
+                    />
+                  </p>
+                </div>
+                <ArrowRight size={16} />
+              </Link>
+            ))}
+          </div>
+        </section>
+        <section className="shell delivery" id="docs">
+          <div>
+            <p className="label">07 / CLEAR DELIVERY</p>
+            <h2>
+              <TranslatedText
+                en="What happens after you contact a seller."
+                vi="Điều gì xảy ra sau khi bạn liên hệ người bán."
+              />
+            </h2>
+          </div>
+          <ol>
+            {[
+              [
+                '01',
+                'Compare requirements',
+                'Check compatibility, available files, and the starting price.',
+              ],
+              [
+                '02',
+                'Contact the seller',
+                'Send the script context and your questions in one request.',
+              ],
+              [
+                '03',
+                'Agree delivery',
+                'Discuss terms privately before any purchase happens.',
+              ],
+            ].map(([n, t, d]) => (
+              <li key={n}>
+                <span>{n}</span>
+                <div>
+                  <h3>{t}</h3>
+                  <p>{d}</p>
+                </div>
+                <Check size={17} />
+              </li>
+            ))}
+          </ol>
+        </section>
+        <div className="shell footer-ad">
+          <AdSlot slotId="home-footer" compact />
         </div>
       </main>
-    </div>
+      <StoreFooter />
+    </>
   );
 }
