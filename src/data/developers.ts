@@ -15,6 +15,7 @@ export type Developer = {
   joined: string;
   email: string;
   phone: string;
+  verified?: boolean;
 };
 export const developers: Developer[] = [
   {
@@ -82,8 +83,7 @@ export const developers: Developer[] = [
     bio: 'The HideAuto team publishes dependable automation building blocks.',
     bioVi: 'Đội ngũ HideAuto phát hành các công cụ tự động hóa đáng tin cậy.',
     specialties: ['Automation', 'Automation tools'],
-    avatar:
-      'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80',
+    avatar: '/images/icon.png',
     products: 5,
     views: 3850,
     orders: 490,
@@ -92,6 +92,7 @@ export const developers: Developer[] = [
     joined: '01 Jan 2025',
     email: 'team@hideauto.dev',
     phone: '+84 286 999 100',
+    verified: true,
   },
   {
     slug: 'orbit-labs',

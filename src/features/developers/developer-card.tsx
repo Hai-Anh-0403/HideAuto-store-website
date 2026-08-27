@@ -15,8 +15,15 @@ export function DeveloperCard({ developer }: { developer: Developer }) {
       />
       <div>
         <h2>
-          <Link href={`/developers/${developer.slug}`}>{developer.name}</Link>{' '}
-          <b>✓</b>
+          <Link href={`/developers/${developer.slug}`}>{developer.name}</Link>
+          {developer.verified && (
+            <span className="developer-verified">
+              <span aria-hidden="true">✓</span>
+              <span className="sr-only">
+                <Message id="common.verifiedSeller" />
+              </span>
+            </span>
+          )}
         </h2>
         <p className="developer-stats">
           <Star size={14} fill="currentColor" /> {developer.rating} (

@@ -136,11 +136,32 @@ export default function Page() {
         </div>
         <ScriptRail {...rails[2]} />
         <ScriptRail {...rails[3]} />
+        <section className="shell section script-rail" id="hideauto-scripts">
+          <div className="heading">
+            <div>
+              <p className="label">
+                06 / <Message id="home.hideAutoScripts" />
+              </p>
+              <h2>
+                <Message id="home.hideAutoScriptsTitle" />
+              </h2>
+            </div>
+            <Link href="/scripts">
+              <Message id="home.viewAllHideAutoScripts" />{' '}
+              <ArrowRight size={15} />
+            </Link>
+          </div>
+          <div className="script-list-grid">
+            {scripts.slice(0, 6).map((script) => (
+              <ScriptListItem key={script.slug} script={script} />
+            ))}
+          </div>
+        </section>
         <section className="shell section" id="developers">
           <div className="heading">
             <div>
               <p className="label">
-                06 / <Message id="home.community" />
+                07 / <Message id="home.community" />
               </p>
               <h2>
                 <TranslatedText
@@ -162,7 +183,7 @@ export default function Page() {
         <section className="shell delivery" id="docs">
           <div>
             <p className="label">
-              07 / <Message id="home.clearDelivery" />
+              08 / <Message id="home.clearDelivery" />
             </p>
             <h2>
               <TranslatedText

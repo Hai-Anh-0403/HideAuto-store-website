@@ -2,7 +2,7 @@
 
 import { Search, SlidersHorizontal, X } from 'lucide-react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
 import { AdSlot } from '@/features/advertising/ad-slot';
 import { platformsForScript, scriptPlatforms } from '@/data/script-platforms';
 import { useLocale } from '@/shared/ui/locale-provider';
@@ -22,13 +22,35 @@ const socialPlatforms = [
 const statuses = ['MAINTAINED', 'NEW', 'POPULAR'];
 const priceBands = ['Under $25', '$25–$34', '$35 and above'];
 
+const ITEMS_PER_PAGE = 8;
+
 export function CatalogBrowser() {
+  const isHydrated = useSyncExternalStore(
+    () => () => { },
+    () => true,
+    () => false,
+  );
   const { t } = useLocale();
   const router = useRouter();
   const pathname = usePathname();
   const params = useSearchParams();
   const [draft, setDraft] = useState(params.get('q') ?? '');
   const [filtersOpen, setFiltersOpen] = useState(false);
+
+  useEffect(() => {
+    if (!filtersOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [filtersOpen]);
+
+  const pageParam = Number(params.get('page'));
+  const currentPage = Number.isInteger(pageParam) && pageParam > 0 ? pageParam : 1;
+
   const values = {
     q: params.get('q')?.toLowerCase() ?? '',
     category: params.get('category') ?? '',
@@ -44,6 +66,12 @@ export function CatalogBrowser() {
     next.delete('platform');
     next.delete('seller');
     next.delete('page');
+    router.replace(`${pathname}?${next.toString()}`);
+  };
+  const setPage = (page: number) => {
+    const next = new URLSearchParams(params.toString());
+    if (page > 1) next.set('page', String(page));
+    else next.delete('page');
     router.replace(`${pathname}?${next.toString()}`);
   };
   const clear = () => {
@@ -96,6 +124,15 @@ export function CatalogBrowser() {
       values.status,
     ],
   );
+
+  const totalPages = Math.max(1, Math.ceil(results.length / ITEMS_PER_PAGE));
+  const safePage = Math.min(currentPage, totalPages);
+
+  const paginatedResults = useMemo(() => {
+    const start = (safePage - 1) * ITEMS_PER_PAGE;
+    return results.slice(start, start + ITEMS_PER_PAGE);
+  }, [results, safePage]);
+
   const submit = (event: React.FormEvent) => {
     event.preventDefault();
     update('q', draft.trim());
@@ -108,17 +145,21 @@ export function CatalogBrowser() {
   ) => (
     <fieldset>
       <legend>{label}</legend>
-      {options.map((option) => (
-        <label key={option}>
-          <input
-            type="radio"
-            name={name}
-            checked={values[name] === option}
-            onChange={() => update(name, values[name] === option ? '' : option)}
-          />
-          {optionLabel(option)}
-        </label>
-      ))}
+      <div className="filter-options">
+        {options.map((option) => (
+          <label key={option}>
+            <input
+              type="radio"
+              name={name}
+              checked={values[name] === option}
+              onChange={() =>
+                update(name, values[name] === option ? '' : option)
+              }
+            />
+            <span>{optionLabel(option)}</span>
+          </label>
+        ))}
+      </div>
     </fieldset>
   );
   const chips = [
@@ -129,8 +170,16 @@ export function CatalogBrowser() {
     ['price', values.price],
   ] as const;
 
+  if (!isHydrated) {
+    return (
+      <div className="catalog-browser catalog-browser--loading" aria-busy />
+    );
+  }
+
   return (
-    <div className="catalog-browser">
+    <div
+      className={`catalog-browser${filtersOpen ? ' catalog-browser--filters-open' : ''}`}
+    >
       <form className="catalog-search" onSubmit={submit}>
         <Search size={18} />
         <input
@@ -146,39 +195,41 @@ export function CatalogBrowser() {
       <div className="catalog-layout">
         <aside
           id="catalog-filters"
-          className={`catalog-filters${filtersOpen ? 'filters-open' : ''}`}
+          className={`catalog-filters${filtersOpen ? ' filters-open' : ''}`}
         >
-          <div className="filter-title">
-            <SlidersHorizontal size={16} />
-            <strong>{t('catalog.filters')}</strong>
-            <button type="button" onClick={clear}>
-              {t('catalog.clearAll')}
-            </button>
-            <button
-              className="filter-close"
-              type="button"
-              onClick={() => setFiltersOpen(false)}
-              aria-label={t('catalog.closeFilters')}
-            >
-              <X size={16} />
-            </button>
+          <div className="catalog-filter-scroll">
+            <div className="filter-title">
+              <SlidersHorizontal size={16} />
+              <strong>{t('catalog.filters')}</strong>
+              <button type="button" onClick={clear}>
+                {t('catalog.clearAll')}
+              </button>
+              <button
+                className="filter-close"
+                type="button"
+                onClick={() => setFiltersOpen(false)}
+                aria-label={t('catalog.closeFilters')}
+              >
+                <X size={16} />
+              </button>
+            </div>
+            {filter('category', 'Category', categories)}
+            {filter(
+              'socialPlatform',
+              t('catalog.socialPlatforms'),
+              socialPlatforms,
+            )}
+            {filter('status', t('catalog.status'), statuses, (status) =>
+              t(statusMessageIds[status as keyof typeof statusMessageIds]),
+            )}
+            {filter('price', 'Starting price', priceBands)}
           </div>
-          {filter('category', 'Category', categories)}
-          {filter(
-            'socialPlatform',
-            t('catalog.socialPlatforms'),
-            socialPlatforms,
-          )}
-          {filter('status', t('catalog.status'), statuses, (status) =>
-            t(statusMessageIds[status as keyof typeof statusMessageIds]),
-          )}
-          {filter('price', 'Starting price', priceBands)}
           <button
             className="filter-results primary"
             type="button"
             onClick={() => setFiltersOpen(false)}
           >
-            {t('catalog.showResults', { count: results.length })}
+            {t('catalog.showResults')}
           </button>
         </aside>
         <section className="catalog-results">
@@ -228,11 +279,44 @@ export function CatalogBrowser() {
             </div>
           )}
           {results.length ? (
-            <div className="catalog-list">
-              {results.map((script) => (
-                <ScriptListItem key={script.slug} script={script} />
-              ))}
-            </div>
+            <>
+              <div className="catalog-list">
+                {paginatedResults.map((script) => (
+                  <ScriptListItem key={script.slug} script={script} />
+                ))}
+              </div>
+              {totalPages > 1 && (
+                <nav className="pager" aria-label={t('catalog.pagination')}>
+                  <button
+                    type="button"
+                    disabled={safePage <= 1}
+                    onClick={() => setPage(safePage - 1)}
+                    aria-label={t('catalog.prevPage')}
+                  >
+                    &lt;
+                  </button>
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                    <button
+                      key={page}
+                      type="button"
+                      className={page === safePage ? 'active' : ''}
+                      onClick={() => setPage(page)}
+                      aria-current={page === safePage ? 'page' : undefined}
+                    >
+                      {page}
+                    </button>
+                  ))}
+                  <button
+                    type="button"
+                    disabled={safePage >= totalPages}
+                    onClick={() => setPage(safePage + 1)}
+                    aria-label={t('catalog.nextPage')}
+                  >
+                    &gt;
+                  </button>
+                </nav>
+              )}
+            </>
           ) : (
             <div className="catalog-empty">
               <h2>{t('catalog.noMatchTitle')}</h2>

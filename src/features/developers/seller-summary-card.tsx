@@ -21,6 +21,14 @@ export function SellerSummaryCard({ seller }: { seller: Developer }) {
         </p>
         <h3>
           <Link href={`/developers/${seller.slug}`}>{seller.name}</Link>
+          {seller.verified && (
+            <span className="seller-verified">
+              <span aria-hidden="true">✓</span>
+              <span className="sr-only">
+                <Message id="common.verifiedSeller" />
+              </span>
+            </span>
+          )}
         </h3>
         <p>
           <TranslatedText en={seller.headline} vi={seller.headlineVi} />

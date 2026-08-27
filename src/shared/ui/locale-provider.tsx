@@ -5,7 +5,7 @@ import {
   ReactNode,
   useContext,
   useEffect,
-  useSyncExternalStore,
+  useState,
 } from 'react';
 import {
   formatMessage,
@@ -25,27 +25,39 @@ function getStoredLocale(): Locale {
   return window.localStorage.getItem('locale') === 'vi' ? 'vi' : 'en';
 }
 
-function getServerLocale(): Locale {
-  return 'en';
+function persistLocale(locale: Locale) {
+  window.localStorage.setItem('locale', locale);
+  document.cookie = `locale=${locale}; Path=/; Max-Age=31536000; SameSite=Lax`;
 }
 
-function subscribe(onStoreChange: () => void) {
-  window.addEventListener('storage', onStoreChange);
-  window.addEventListener('localechange', onStoreChange);
-  return () => {
-    window.removeEventListener('storage', onStoreChange);
-    window.removeEventListener('localechange', onStoreChange);
-  };
-}
+export function LocaleProvider({
+  children,
+  initialLocale,
+}: {
+  children: ReactNode;
+  initialLocale: Locale;
+}) {
+  const [locale, setCurrentLocale] = useState<Locale>(initialLocale);
 
-export function LocaleProvider({ children }: { children: ReactNode }) {
-  const locale = useSyncExternalStore(
-    subscribe,
-    getStoredLocale,
-    getServerLocale,
-  );
+  useEffect(() => {
+    const syncLocale = () => {
+      const storedLocale = getStoredLocale();
+      persistLocale(storedLocale);
+      setCurrentLocale(storedLocale);
+    };
+    syncLocale();
+    window.addEventListener('storage', syncLocale);
+    window.addEventListener('localechange', syncLocale);
+
+    return () => {
+      window.removeEventListener('storage', syncLocale);
+      window.removeEventListener('localechange', syncLocale);
+    };
+  }, []);
+
   const setLocale = (next: Locale) => {
-    window.localStorage.setItem('locale', next);
+    persistLocale(next);
+    setCurrentLocale(next);
     document.documentElement.lang = next;
     window.dispatchEvent(new Event('localechange'));
   };

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { cookies } from 'next/headers';
 import './globals.css';
 import { LocaleProvider } from '@/shared/ui/locale-provider';
 import { BackToTop } from '@/shared/ui/back-to-top';
@@ -9,11 +10,14 @@ export const metadata: Metadata = {
   icons: { icon: '/images/icon.png', apple: '/images/icon.png' },
 };
 
-export default function RootLayout({ children }: LayoutProps<'/'>) {
+export default async function RootLayout({ children }: LayoutProps<'/'>) {
+  const cookieStore = await cookies();
+  const initialLocale = cookieStore.get('locale')?.value === 'vi' ? 'vi' : 'en';
+
   return (
     <html lang="en">
       <body>
-        <LocaleProvider>
+        <LocaleProvider initialLocale={initialLocale}>
           {children}
           <BackToTop />
         </LocaleProvider>
