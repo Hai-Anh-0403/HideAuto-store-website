@@ -56,7 +56,13 @@ function ScriptRail({
     <section className="shell section script-rail">
       <div className="heading">
         <div>
-          <p className="label">{label} / DISCOVER SCRIPTS</p>
+          <p className="label">
+            {label} /{' '}
+            <TranslatedText
+              en="DISCOVER SCRIPTS"
+              vi="KHÁM PHÁ KỊCH BẢN"
+            />
+          </p>
           <h2>
             <TranslatedText en={title} vi={titleVi} />
           </h2>
@@ -197,24 +203,34 @@ export default function Page() {
               [
                 '01',
                 'Compare requirements',
+                'So sánh yêu cầu',
                 'Check compatibility, available files, and the starting price.',
+                'Kiểm tra tính tương thích, tệp đi kèm và giá khởi điểm.',
               ],
               [
                 '02',
                 'Contact the seller',
+                'Liên hệ người bán',
                 'Send the script context and your questions in one request.',
+                'Gửi ngữ cảnh kịch bản và các câu hỏi của bạn trong một yêu cầu.',
               ],
               [
                 '03',
                 'Agree delivery',
+                'Thỏa thuận bàn giao',
                 'Discuss terms privately before any purchase happens.',
+                'Trao đổi riêng về các điều khoản trước khi tiến hành giao dịch.',
               ],
-            ].map(([n, t, d]) => (
+            ].map(([n, tEn, tVi, dEn, dVi]) => (
               <li key={n}>
                 <span>{n}</span>
                 <div>
-                  <h3>{t}</h3>
-                  <p>{d}</p>
+                  <h3>
+                    <TranslatedText en={tEn} vi={tVi} />
+                  </h3>
+                  <p>
+                    <TranslatedText en={dEn} vi={dVi} />
+                  </p>
                 </div>
                 <Check size={17} />
               </li>
