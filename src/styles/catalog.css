@@ -300,8 +300,22 @@
   margin-left: 6px;
   border: 1px solid var(--line);
   border-radius: 0;
-  background: transparent;
-  padding: 7px;
+  background: var(--panel);
+  padding: 6px 10px;
+  color: var(--ink);
+  font: 600 13px Barlow, system-ui, sans-serif;
+  cursor: pointer;
+  transition: border-color 180ms ease;
+}
+
+.catalog-toolbar select:hover,
+.catalog-toolbar select:focus-visible {
+  border-color: var(--steel);
+  outline: 0;
+}
+
+.catalog-toolbar select option {
+  background-color: var(--panel);
   color: var(--ink);
 }
 

@@ -85,7 +85,9 @@ export function StoreHeader() {
                 {t('navigation.docs')}
               </Link>
             </nav>
-            <ThemeToggle />
+            <div className="mobile-navigation-actions">
+              <LanguageSwitcher />
+            </div>
             <Link
               className="login-button"
               href="/auth/sign-in"

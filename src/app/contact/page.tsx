@@ -21,10 +21,10 @@ export default function ContactPage() {
     <>
       <StoreHeader />
       <main className="shell section">
-        <div className="page-back-bar">
+        <div className="back-button-wrapper">
           <BackButton fallbackHref="/scripts" />
-          <p className="label">{t('contact.requestDetailsLabel')}</p>
         </div>
+        <p className="label">{t('contact.requestDetailsLabel')}</p>
         <div className="hero-grid">
           <ContactForm product={product} />
           <aside className="purchase">

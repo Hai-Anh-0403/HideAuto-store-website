@@ -188,26 +188,44 @@ header {
 .language-switcher {
   display: block;
   border: 1px solid var(--line);
-  color: var(--steel);
+  background: var(--panel);
+  color: var(--ink);
+  transition: border-color 180ms ease, color 180ms ease;
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+.language-switcher:hover,
+.language-switcher:focus-within {
+  border-color: var(--steel);
 }
 
 .language-switcher select {
-  height: 30px;
+  height: 32px;
   border: 0;
   border-radius: 0;
   background: transparent;
-  color: inherit;
-  padding: 0 25px 0 8px;
-  font: 10px 'JetBrains Mono';
+  color: var(--ink);
+  padding: 0 20px 0 8px;
+  font: 600 11px 'JetBrains Mono';
   outline: 0;
+  cursor: pointer;
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+.language-switcher select option {
+  background-color: var(--panel);
+  color: var(--ink);
 }
 
 .theme-toggle {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
+  padding: 0;
   border: 1px solid var(--line);
   background: transparent;
   color: var(--steel);
@@ -225,17 +243,9 @@ header {
   outline-offset: 2px;
 }
 
-/* Page Back Button & Bar */
-.page-back-bar {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 24px;
-  flex-wrap: wrap;
-}
-
-.page-back-bar .label {
-  margin: 0;
+/* Page Back Button & Wrapper */
+.back-button-wrapper {
+  margin-bottom: 16px;
 }
 
 .back-button {

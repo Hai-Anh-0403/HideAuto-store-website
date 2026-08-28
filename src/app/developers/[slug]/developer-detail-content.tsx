@@ -21,13 +21,13 @@ export function DeveloperDetailContent({
 
   return (
     <main className="shell section developer-page">
-      <div className="page-back-bar">
+      <div className="back-button-wrapper">
         <BackButton fallbackHref="/developers" />
-        <p className="label">
-          <Link href="/developers">{t('seller.sellersLabel')}</Link> /{' '}
-          {developer.name.toUpperCase()}
-        </p>
       </div>
+      <p className="label">
+        <Link href="/developers">{t('seller.sellersLabel')}</Link> /{' '}
+        {developer.name.toUpperCase()}
+      </p>
       <div className="developer-profile">
         <div className="developer-profile__header">
           <Image

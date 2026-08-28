@@ -25,13 +25,13 @@ export function ScriptDetailContent({
 
   return (
     <main className="shell section">
-      <div className="page-back-bar">
+      <div className="back-button-wrapper">
         <BackButton fallbackHref="/scripts" />
-        <p className="label">
-          <Link href="/scripts">{t('script.scriptsLabel')}</Link> /{' '}
-          {script.name.toUpperCase()}
-        </p>
       </div>
+      <p className="label">
+        <Link href="/scripts">{t('script.scriptsLabel')}</Link> /{' '}
+        {script.name.toUpperCase()}
+      </p>
       <div className="hero-grid">
         <section>
           <p className="label">

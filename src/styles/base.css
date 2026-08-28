@@ -31,6 +31,8 @@
   --danger: #a3524d;
   --warning: #8a7250;
   --info: #749dc4;
+
+  color-scheme: light;
 }
 
 /* ── Dark mode ── */
@@ -57,6 +59,13 @@
   --danger: #d98d86;
   --warning: #b09a72;
   --info: #a8c3dc;
+
+  color-scheme: dark;
+}
+
+select option {
+  background-color: var(--panel);
+  color: var(--ink);
 }
 
 @keyframes skeleton-pulse {

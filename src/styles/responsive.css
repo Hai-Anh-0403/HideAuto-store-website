@@ -125,24 +125,51 @@
   }
 
   .nav-actions .header-search,
-  .nav-actions .login-button {
+  .nav-actions .login-button,
+  .nav-actions .language-switcher {
     display: none !important;
   }
 
-  .language-switcher select {
-    height: 34px;
-    min-width: 112px;
-    padding-right: 24px;
+  .mobile-navigation-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 4px;
+    width: 100%;
+    box-sizing: border-box;
+    min-width: 0;
+  }
+
+  .mobile-navigation-actions .language-switcher {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    min-width: 0 !important;
+  }
+
+  .mobile-navigation-actions .language-switcher select {
+    height: 38px;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 0 20px 0 10px;
+    font-size: 12px;
   }
 
   .mobile-menu-button {
-    display: grid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     flex: 0 0 auto;
-    width: 36px;
-    height: 36px;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    margin: 0;
     border: 1px solid var(--line);
     background: transparent;
     color: var(--ink);
+    cursor: pointer;
   }
 
   .mobile-navigation {
@@ -155,16 +182,21 @@
     padding: 16px 12px 24px;
     background: var(--bg);
     backdrop-filter: none;
+    box-sizing: border-box;
   }
 
   .mobile-navigation > div {
     width: min(100%, 560px);
     margin: 0 auto;
     padding: 14px;
-    gap: 10px;
+    gap: 12px;
     border: 1px solid var(--line);
     background: var(--panel);
-    display: grid;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    min-width: 0;
+    overflow: hidden;
   }
 
   .mobile-navigation button {
@@ -178,42 +210,55 @@
 
   .mobile-navigation .header-search {
     display: flex;
-    width: 100%;
-    padding: 9px 10px;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 8px 10px;
   }
 
   .mobile-navigation .header-search input {
-    width: 100%;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
     min-height: 28px;
-    font-size: 16px;
+    font-size: 14px;
+    box-sizing: border-box !important;
   }
 
   .mobile-navigation nav {
-    display: grid;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
   }
 
   .mobile-navigation a {
-    min-height: 52px;
+    min-height: 48px;
     display: flex;
     align-items: center;
-    padding: 12px 4px;
+    padding: 10px 4px;
     color: var(--ink);
     text-decoration: none;
-    font: 600 24px 'Barlow Condensed';
+    font: 600 22px 'Barlow Condensed';
     text-transform: uppercase;
     border-top: 1px solid var(--line);
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .mobile-navigation .login-button {
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 8px;
     min-height: 42px;
-    margin-top: 8px;
+    margin-top: 4px;
     background: var(--steel);
     color: var(--bg);
     text-decoration: none;
     font: 600 16px 'Barlow Condensed';
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
   }
 
   .shell {
@@ -495,39 +540,38 @@
   .script-recommendations {
     padding-top: 42px;
   }
-}
+  /* Compact mobile screens (max 390px) */
+  @media (max-width: 390px) {
+    .nav-actions .login-button {
+      padding-inline: 8px;
+    }
 
-/* Compact mobile screens (<= 390px) */
-@media (max-width: 390px) {
-  .nav-actions .login-button {
-    padding-inline: 8px;
-  }
+    .hero-grid,
+    .delivery {
+      padding: 16px;
+    }
 
-  .hero-grid,
-  .delivery {
-    padding: 16px;
-  }
+    .script-list-link,
+    .hero-featured .script-list-link {
+      --script-thumbnail-size: 84px;
+      gap: 10px !important;
+    }
 
-  .script-list-link,
-  .hero-featured .script-list-link {
-    --script-thumbnail-size: 84px;
-    gap: 10px !important;
-  }
+    .script-list-copy h3 {
+      font-size: 17px;
+    }
 
-  .script-list-copy h3 {
-    font-size: 17px;
-  }
+    .catalog-filters {
+      width: 100%;
+    }
 
-  .catalog-filters {
-    width: 100%;
-  }
+    .brand > span {
+      font-size: 15px;
+    }
 
-  .brand > span {
-    font-size: 15px;
-  }
-
-  .language-switcher select {
-    padding-left: 6px;
+    .language-switcher select {
+      padding-left: 6px;
+    }
   }
 }
 
