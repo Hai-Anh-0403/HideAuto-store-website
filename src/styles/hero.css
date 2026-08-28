@@ -149,25 +149,36 @@
   gap: 45px;
 }
 
+[data-theme="dark"] .delivery {
+  background: #1a2634;
+  color: #eef6ff;
+}
+
 .delivery h2 {
   font-size: 40px;
   margin-top: 12px;
+  color: #ffffff;
 }
 
 .delivery h3 {
   font: 600 21px 'Barlow Condensed';
   text-transform: uppercase;
   margin: 25px 0 7px;
+  color: #ffffff;
 }
 
 .delivery p {
   margin: 0;
   line-height: 1.5;
-  color: var(--muted);
+  color: #d6ebff;
 }
 
 .delivery .label {
   color: #b5d9fd;
+}
+
+[data-theme="dark"] .delivery .label {
+  color: #8bb5e0;
 }
 
 .delivery ol {
@@ -189,11 +200,20 @@
   color: #b5d9fd;
 }
 
+[data-theme="dark"] .delivery li span {
+  color: #8bb5e0;
+}
+
 .delivery li h3 {
   margin: 0 0 4px;
   font-size: 18px;
+  color: #ffffff;
 }
 
 .delivery li p {
   color: #d6ebff;
+}
+
+[data-theme="dark"] .delivery li p {
+  color: #c0d8f0;
 }

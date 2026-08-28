@@ -41,7 +41,7 @@ header {
   content: 'HIDE';
   position: absolute;
   left: 0;
-  color: #416180;
+  color: var(--steel);
 }
 
 .brand:first-letter {
@@ -142,9 +142,25 @@ header {
 .header-search {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   border: 1px solid var(--line);
-  padding: 5px 8px;
+  padding: 0 12px;
+  height: 34px;
+  transition: border-color 180ms ease;
+}
+
+.header-search:focus-within {
+  border-color: var(--steel);
+}
+
+.header-search svg {
+  color: var(--dim);
+  flex-shrink: 0;
+  transition: color 180ms ease;
+}
+
+.header-search:focus-within svg {
+  color: var(--steel);
 }
 
 @media (min-width: 761px) {
@@ -156,12 +172,12 @@ header {
 }
 
 .header-search input {
-  width: 260px !important;
+  width: 320px !important;
   border: 0;
   outline: 0;
   background: transparent;
   color: var(--ink);
-  font: 12px Barlow;
+  font: 13px Barlow, system-ui, sans-serif;
 }
 
 .mobile-menu-button,
@@ -184,6 +200,72 @@ header {
   padding: 0 25px 0 8px;
   font: 10px 'JetBrains Mono';
   outline: 0;
+}
+
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--steel);
+  cursor: pointer;
+  transition: color 180ms ease, border-color 180ms ease;
+}
+
+.theme-toggle:hover {
+  color: var(--ink);
+  border-color: var(--steel);
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--steel);
+  outline-offset: 2px;
+}
+
+/* Page Back Button & Bar */
+.page-back-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.page-back-bar .label {
+  margin: 0;
+}
+
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  font: 600 13px 'Barlow Condensed';
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition:
+    color 180ms ease,
+    border-color 180ms ease,
+    background-color 180ms ease;
+}
+
+.back-button:hover {
+  border-color: var(--steel);
+  color: var(--steel);
+  background: color-mix(in srgb, var(--steel) 8%, transparent);
+}
+
+.back-button:focus-visible {
+  outline: 2px solid var(--steel);
+  outline-offset: 2px;
 }
 
 .back-to-top {

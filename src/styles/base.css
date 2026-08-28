@@ -12,7 +12,68 @@
   --dim: #7a7a7d;
   --bg: #f2f2f3;
   --panel: #e9e9ea;
+  --surface-tertiary: #dededf;
   --line: color-mix(in srgb, var(--ink) 12%, transparent);
+
+  /* Steel ramp */
+  --steel-100: #eef6ff;
+  --steel-200: #d6ebff;
+  --steel-300: #b5d9fd;
+  --steel-800: #2c455d;
+  --steel-900: #1d2d3d;
+
+  /* Brand */
+  --brand: #5980a6;
+  --brand-tint: #eef6ff;
+  --brand-tint-text: #2c455d;
+
+  /* Semantic */
+  --danger: #a3524d;
+  --warning: #8a7250;
+  --info: #749dc4;
+}
+
+/* ── Dark mode ── */
+[data-theme="dark"] {
+  --steel: #7ba2ca;
+  --ink: #e7e8ea;
+  --muted: #9a9ca0;
+  --dim: #6d7075;
+  --bg: #14161a;
+  --panel: #1a1d22;
+  --surface-tertiary: #23272e;
+  --line: color-mix(in srgb, #e7e8ea 10%, transparent);
+
+  --steel-100: rgba(123, 162, 202, 0.08);
+  --steel-200: rgba(123, 162, 202, 0.12);
+  --steel-300: rgba(123, 162, 202, 0.20);
+  --steel-800: #a8c3dc;
+  --steel-900: #d0e0f0;
+
+  --brand: #7ba2ca;
+  --brand-tint: rgba(123, 162, 202, 0.16);
+  --brand-tint-text: #a8c3dc;
+
+  --danger: #d98d86;
+  --warning: #b09a72;
+  --info: #a8c3dc;
+}
+
+@keyframes skeleton-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+.skeleton {
+  background: color-mix(in srgb, var(--ink) 12%, transparent);
+  border-radius: 0;
+  animation: skeleton-pulse 1.4s ease-out infinite;
+  pointer-events: none;
+  user-select: none;
 }
 
 * {

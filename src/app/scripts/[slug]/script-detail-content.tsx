@@ -9,6 +9,7 @@ import { ScriptListItem } from '@/features/catalog/script-list-item';
 import { platformsForScript } from '@/data/script-platforms';
 import { developerSlug, type Developer } from '@/features/developers/data';
 import { useLocale } from '@/shared/ui/locale-provider';
+import { BackButton } from '@/shared/ui/back-button';
 
 export function ScriptDetailContent({
   script,
@@ -24,10 +25,13 @@ export function ScriptDetailContent({
 
   return (
     <main className="shell section">
-      <p className="label">
-        <Link href="/scripts">{t('script.scriptsLabel')}</Link> /{' '}
-        {script.name.toUpperCase()}
-      </p>
+      <div className="page-back-bar">
+        <BackButton fallbackHref="/scripts" />
+        <p className="label">
+          <Link href="/scripts">{t('script.scriptsLabel')}</Link> /{' '}
+          {script.name.toUpperCase()}
+        </p>
+      </div>
       <div className="hero-grid">
         <section>
           <p className="label">

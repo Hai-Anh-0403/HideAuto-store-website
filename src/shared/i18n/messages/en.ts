@@ -2,6 +2,7 @@ export const en = {
   'common.language': 'Language',
   'common.selectLanguage': 'Select language',
   'common.backToTop': 'Back to top',
+  'common.back': 'Back',
   'common.viewAll': 'View all',
   'common.browseScripts': 'Browse scripts',
   'common.returnHome': 'Return home',
@@ -235,6 +236,10 @@ export const en = {
   'script.contactSeller': 'Contact seller about this script',
   'script.recommendations': 'RECOMMENDATIONS',
   'script.moreFromSeller': 'More from {seller}',
+  'theme.light': 'Light',
+  'theme.dark': 'Dark',
+  'theme.system': 'System',
+  'theme.toggle': 'Toggle theme',
 } as const;
 
 export type MessageKey = keyof typeof en;

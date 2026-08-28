@@ -6,6 +6,8 @@ import { StoreHeader } from '@/shared/ui/store-header';
 import { StoreFooter } from '@/shared/ui/store-footer';
 import { useLocale } from '@/shared/ui/locale-provider';
 
+import { CatalogBrowserSkeleton } from '@/shared/ui/skeletons/catalog-browser-skeleton';
+
 function CatalogHeader() {
   const { t } = useLocale();
 
@@ -22,11 +24,6 @@ function CatalogHeader() {
   );
 }
 
-function CatalogLoading() {
-  const { t } = useLocale();
-  return <p className="label">{t('system.loadingCatalog')}</p>;
-}
-
 export default function ScriptsPage() {
   return (
     <>
@@ -36,7 +33,7 @@ export default function ScriptsPage() {
       <StoreHeader />
       <main id="main" className="shell section catalog-page">
         <CatalogHeader />
-        <Suspense fallback={<CatalogLoading />}>
+        <Suspense fallback={<CatalogBrowserSkeleton />}>
           <CatalogBrowser />
         </Suspense>
       </main>

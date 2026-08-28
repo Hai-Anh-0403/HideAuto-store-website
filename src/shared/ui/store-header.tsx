@@ -6,6 +6,7 @@ import { LogIn, Menu, Search, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { LanguageSwitcher } from './language-switcher';
 import { useLocale } from './locale-provider';
+import { ThemeToggle } from './theme-toggle';
 
 export function StoreHeader() {
   const { t } = useLocale();
@@ -42,6 +43,7 @@ export function StoreHeader() {
               aria-label={t('navigation.searchScripts')}
             />
           </form>
+          <ThemeToggle />
           <LanguageSwitcher />
           <Link className="login-button" href="/auth/sign-in">
             <LogIn size={16} />
@@ -83,6 +85,7 @@ export function StoreHeader() {
                 {t('navigation.docs')}
               </Link>
             </nav>
+            <ThemeToggle />
             <Link
               className="login-button"
               href="/auth/sign-in"

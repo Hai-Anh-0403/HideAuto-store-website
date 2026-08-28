@@ -4,6 +4,7 @@ export const vi: Record<MessageKey, string> = {
   'common.language': 'Ngôn ngữ',
   'common.selectLanguage': 'Chọn ngôn ngữ',
   'common.backToTop': 'Về đầu trang',
+  'common.back': 'Quay lại',
   'common.viewAll': 'Xem tất cả',
   'common.browseScripts': 'Khám phá kịch bản',
   'common.returnHome': 'Về trang chủ',
@@ -238,4 +239,8 @@ export const vi: Record<MessageKey, string> = {
   'script.contactSeller': 'Liên hệ người bán về kịch bản này',
   'script.recommendations': 'GỢI Ý TƯƠNG TỰ',
   'script.moreFromSeller': 'Kịch bản khác từ {seller}',
+  'theme.light': 'Sáng',
+  'theme.dark': 'Tối',
+  'theme.system': 'Hệ thống',
+  'theme.toggle': 'Chuyển giao diện',
 };

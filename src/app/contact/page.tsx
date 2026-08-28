@@ -7,6 +7,7 @@ import { StoreHeader } from '@/shared/ui/store-header';
 import { StoreFooter } from '@/shared/ui/store-footer';
 import { useLocale } from '@/shared/ui/locale-provider';
 import { useSearchParams } from 'next/navigation';
+import { BackButton } from '@/shared/ui/back-button';
 
 export default function ContactPage() {
   const searchParams = useSearchParams();
@@ -20,7 +21,10 @@ export default function ContactPage() {
     <>
       <StoreHeader />
       <main className="shell section">
-        <p className="label">{t('contact.requestDetailsLabel')}</p>
+        <div className="page-back-bar">
+          <BackButton fallbackHref="/scripts" />
+          <p className="label">{t('contact.requestDetailsLabel')}</p>
+        </div>
         <div className="hero-grid">
           <ContactForm product={product} />
           <aside className="purchase">

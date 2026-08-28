@@ -7,6 +7,7 @@ import type { Developer } from '@/data/developers';
 import type { CatalogScript } from '@/features/catalog/data';
 import { ScriptListItem } from '@/features/catalog/script-list-item';
 import { useLocale } from '@/shared/ui/locale-provider';
+import { BackButton } from '@/shared/ui/back-button';
 
 export function DeveloperDetailContent({
   developer,
@@ -20,10 +21,13 @@ export function DeveloperDetailContent({
 
   return (
     <main className="shell section developer-page">
-      <p className="label">
-        <Link href="/#developers">{t('seller.sellersLabel')}</Link> /{' '}
-        {developer.name.toUpperCase()}
-      </p>
+      <div className="page-back-bar">
+        <BackButton fallbackHref="/developers" />
+        <p className="label">
+          <Link href="/developers">{t('seller.sellersLabel')}</Link> /{' '}
+          {developer.name.toUpperCase()}
+        </p>
+      </div>
       <div className="developer-profile">
         <div className="developer-profile__header">
           <Image
