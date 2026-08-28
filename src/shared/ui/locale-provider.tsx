@@ -21,12 +21,7 @@ const LocaleContext = createContext<{
   t: (key: MessageKey, values?: MessageValues) => string;
 } | null>(null);
 
-function getStoredLocale(): Locale {
-  return window.localStorage.getItem('locale') === 'vi' ? 'vi' : 'en';
-}
-
 function persistLocale(locale: Locale) {
-  window.localStorage.setItem('locale', locale);
   document.cookie = `locale=${locale}; Path=/; Max-Age=31536000; SameSite=Lax`;
 }
 
@@ -39,27 +34,10 @@ export function LocaleProvider({
 }) {
   const [locale, setCurrentLocale] = useState<Locale>(initialLocale);
 
-  useEffect(() => {
-    const syncLocale = () => {
-      const storedLocale = getStoredLocale();
-      persistLocale(storedLocale);
-      setCurrentLocale(storedLocale);
-    };
-    syncLocale();
-    window.addEventListener('storage', syncLocale);
-    window.addEventListener('localechange', syncLocale);
-
-    return () => {
-      window.removeEventListener('storage', syncLocale);
-      window.removeEventListener('localechange', syncLocale);
-    };
-  }, []);
-
   const setLocale = (next: Locale) => {
     persistLocale(next);
     setCurrentLocale(next);
     document.documentElement.lang = next;
-    window.dispatchEvent(new Event('localechange'));
   };
   const t = (key: MessageKey, values?: MessageValues) => {
     const localized = messages[locale][key] ?? messages.en[key];

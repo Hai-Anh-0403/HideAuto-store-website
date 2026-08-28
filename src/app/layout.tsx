@@ -15,7 +15,7 @@ export default async function RootLayout({ children }: LayoutProps<'/'>) {
   const initialLocale = cookieStore.get('locale')?.value === 'vi' ? 'vi' : 'en';
 
   return (
-    <html lang="en">
+    <html lang={initialLocale}>
       <body>
         <LocaleProvider initialLocale={initialLocale}>
           {children}

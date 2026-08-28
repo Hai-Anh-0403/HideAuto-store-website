@@ -2,7 +2,7 @@
 
 import { Search, SlidersHorizontal, X } from 'lucide-react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { AdSlot } from '@/features/advertising/ad-slot';
 import { platformsForScript, scriptPlatforms } from '@/data/script-platforms';
 import { useLocale } from '@/shared/ui/locale-provider';
@@ -25,11 +25,6 @@ const priceBands = ['Under $25', '$25–$34', '$35 and above'];
 const ITEMS_PER_PAGE = 8;
 
 export function CatalogBrowser() {
-  const isHydrated = useSyncExternalStore(
-    () => () => { },
-    () => true,
-    () => false,
-  );
   const { t } = useLocale();
   const router = useRouter();
   const pathname = usePathname();
@@ -49,7 +44,8 @@ export function CatalogBrowser() {
   }, [filtersOpen]);
 
   const pageParam = Number(params.get('page'));
-  const currentPage = Number.isInteger(pageParam) && pageParam > 0 ? pageParam : 1;
+  const currentPage =
+    Number.isInteger(pageParam) && pageParam > 0 ? pageParam : 1;
 
   const values = {
     q: params.get('q')?.toLowerCase() ?? '',
@@ -170,15 +166,9 @@ export function CatalogBrowser() {
     ['price', values.price],
   ] as const;
 
-  if (!isHydrated) {
-    return (
-      <div className="catalog-browser catalog-browser--loading" aria-busy />
-    );
-  }
-
   return (
     <div
-      className={`catalog-browser${filtersOpen ? ' catalog-browser--filters-open' : ''}`}
+      className={`catalog-browser${filtersOpen ? 'catalog-browser--filters-open' : ''}`}
     >
       <form className="catalog-search" onSubmit={submit}>
         <Search size={18} />
@@ -195,7 +185,7 @@ export function CatalogBrowser() {
       <div className="catalog-layout">
         <aside
           id="catalog-filters"
-          className={`catalog-filters${filtersOpen ? ' filters-open' : ''}`}
+          className={`catalog-filters${filtersOpen ? 'filters-open' : ''}`}
         >
           <div className="catalog-filter-scroll">
             <div className="filter-title">
@@ -295,17 +285,19 @@ export function CatalogBrowser() {
                   >
                     &lt;
                   </button>
-                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                    <button
-                      key={page}
-                      type="button"
-                      className={page === safePage ? 'active' : ''}
-                      onClick={() => setPage(page)}
-                      aria-current={page === safePage ? 'page' : undefined}
-                    >
-                      {page}
-                    </button>
-                  ))}
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                    (page) => (
+                      <button
+                        key={page}
+                        type="button"
+                        className={page === safePage ? 'active' : ''}
+                        onClick={() => setPage(page)}
+                        aria-current={page === safePage ? 'page' : undefined}
+                      >
+                        {page}
+                      </button>
+                    ),
+                  )}
                   <button
                     type="button"
                     disabled={safePage >= totalPages}
