@@ -1,62 +1,38 @@
+'use client';
+
 import Link from 'next/link';
 import { ContactForm } from '@/features/support/components/contact-form';
 import { scripts } from '@/features/catalog/data';
-import { TranslatedText } from '@/shared/ui/translated-text';
 import { StoreHeader } from '@/shared/ui/store-header';
+import { StoreFooter } from '@/shared/ui/store-footer';
+import { useLocale } from '@/shared/ui/locale-provider';
+import { useSearchParams } from 'next/navigation';
 
-export default async function ContactPage({
-  searchParams,
-}: PageProps<'/contact'>) {
-  const { script } = await searchParams;
+export default function ContactPage() {
+  const searchParams = useSearchParams();
+  const script = searchParams.get('script');
   const selectedSlug = typeof script === 'string' ? script : undefined;
   const product =
     scripts.find((item) => item.slug === selectedSlug) ?? scripts[0];
+  const { t } = useLocale();
+
   return (
     <>
       <StoreHeader />
       <main className="shell section">
-        <p className="label">
-          <TranslatedText
-            en="CONTACT SELLER / REQUEST DETAILS"
-            vi="LIÊN HỆ NGƯỜI BÁN / CHI TIẾT YÊU CẦU"
-          />
-        </p>
+        <p className="label">{t('contact.requestDetailsLabel')}</p>
         <div className="hero-grid">
           <ContactForm product={product} />
           <aside className="purchase">
-            <p className="label">
-              <TranslatedText
-                en="WHAT HAPPENS NEXT"
-                vi="ĐIỀU GÌ XẢY RA TIẾP THEO"
-              />
-            </p>
-            <h2>
-              <TranslatedText
-                en="Direct and clear."
-                vi="Trực tiếp và rõ ràng."
-              />
-            </h2>
-            <p>
-              <TranslatedText
-                en="The seller replies within one business day with availability, final price, and next steps."
-                vi="Người bán phản hồi trong một ngày làm việc về khả năng cung cấp, giá cuối cùng và bước tiếp theo."
-              />
-            </p>
-            <small>
-              <TranslatedText
-                en="Your details are shared only with the seller for this request."
-                vi="Thông tin của bạn chỉ được chia sẻ với người bán cho yêu cầu này."
-              />
-            </small>
-            <Link href="/scripts">
-              <TranslatedText
-                en="Return to catalog →"
-                vi="Quay lại danh mục →"
-              />
-            </Link>
+            <p className="label">{t('contact.whatHappensNext')}</p>
+            <h2>{t('contact.directAndClear')}</h2>
+            <p>{t('contact.sellerReplyNotice')}</p>
+            <small>{t('contact.privacyNote')}</small>
+            <Link href="/scripts">{t('contact.returnToCatalog')}</Link>
           </aside>
         </div>
       </main>
+      <StoreFooter />
     </>
   );
 }

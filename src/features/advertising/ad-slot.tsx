@@ -16,7 +16,7 @@ export function AdSlot({
   );
   return (
     <aside
-      className={`ad-slot${compact ? 'ad-slot-compact' : ''}`}
+      className={`ad-slot${compact ? ' ad-slot-compact' : ''}`}
       aria-label={t('advertising.ariaLabel')}
     >
       <span>

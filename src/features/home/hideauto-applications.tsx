@@ -1,7 +1,9 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
-import { Message } from '@/shared/ui/message';
+import { useLocale } from '@/shared/ui/locale-provider';
 
 const products = [
   {
@@ -25,20 +27,18 @@ const products = [
 ] as const;
 
 export function HideAutoProducts() {
+  const { t } = useLocale();
+
   return (
     <section className="shell section hideauto-products">
       <div className="heading">
         <div>
           <p className="label">
-            06 / <Message id="home.products.label" />
+            06 / {t('home.products.label')}
           </p>
-          <h2>
-            <Message id="home.products.title" />
-          </h2>
+          <h2>{t('home.products.title')}</h2>
         </div>
-        <p>
-          <Message id="home.products.introduction" />
-        </p>
+        <p>{t('home.products.introduction')}</p>
       </div>
       <div className="hideauto-products-grid">
         {products.map(({ slug, name, category, description }) => (
@@ -49,15 +49,11 @@ export function HideAutoProducts() {
               width={48}
               height={48}
             />
-            <p className="label">
-              <Message id={category} />
-            </p>
+            <p className="label">{t(category)}</p>
             <h3>{name}</h3>
-            <p>
-              <Message id={description} />
-            </p>
+            <p>{t(description)}</p>
             <Link href={`/contact?product=${slug}`}>
-              <Message id="home.products.learnMore" /> <ArrowRight size={15} />
+              {t('home.products.learnMore')} <ArrowRight size={15} />
             </Link>
           </article>
         ))}

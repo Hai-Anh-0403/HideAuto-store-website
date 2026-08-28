@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { Eye, Star } from 'lucide-react';
 import type { CatalogScript } from './data';
 import { developerSlug } from '@/features/developers/data';
-import { Message } from '@/shared/ui/message';
 import { useLocale } from '@/shared/ui/locale-provider';
 import { platformLabel } from '@/data/script-platforms';
 
@@ -15,7 +14,13 @@ const statusMessageIds = {
   POPULAR: 'scriptStatus.popular',
 } as const;
 
-export function ScriptListItem({ script }: { script: CatalogScript }) {
+export function ScriptListItem({
+  script,
+  priority = false,
+}: {
+  script: CatalogScript;
+  priority?: boolean;
+}) {
   const { t } = useLocale();
 
   return (
@@ -31,6 +36,8 @@ export function ScriptListItem({ script }: { script: CatalogScript }) {
             alt={`Preview for ${script.name}`}
             width={120}
             height={120}
+            priority={priority}
+            sizes="(max-width: 760px) 100px, 120px"
           />
         </Link>
         <div className="script-list-copy">
@@ -54,10 +61,7 @@ export function ScriptListItem({ script }: { script: CatalogScript }) {
             {platformLabel(script.slug)}
           </small>
           <strong>
-            {script.price}{' '}
-            <small>
-              <Message id="common.startingPrice" />
-            </small>
+            {script.price} <small>{t('common.startingPrice')}</small>
           </strong>
         </div>
       </div>

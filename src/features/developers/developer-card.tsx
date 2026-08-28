@@ -1,10 +1,15 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { Mail, Phone, Send, Star } from 'lucide-react';
 import type { Developer } from '@/data/developers';
-import { Message } from '@/shared/ui/message';
+import { useLocale } from '@/shared/ui/locale-provider';
 
 export function DeveloperCard({ developer }: { developer: Developer }) {
+  const { locale, t } = useLocale();
+  const isVi = locale === 'vi';
+
   return (
     <article>
       <Image
@@ -19,23 +24,21 @@ export function DeveloperCard({ developer }: { developer: Developer }) {
           {developer.verified && (
             <span className="developer-verified">
               <span aria-hidden="true">✓</span>
-              <span className="sr-only">
-                <Message id="common.verifiedSeller" />
-              </span>
+              <span className="sr-only">{t('common.verifiedSeller')}</span>
             </span>
           )}
         </h2>
         <p className="developer-stats">
           <Star size={14} fill="currentColor" /> {developer.rating} (
-          {developer.reviewCount}) · <Message id="seller.products" />:{' '}
-          {developer.products} · <Message id="seller.views" />:{' '}
+          {developer.reviewCount}) · {t('seller.products')}:{' '}
+          {developer.products} · {t('seller.views')}:{' '}
           {developer.views.toLocaleString('en-US')} ·{' '}
-          <Message id="seller.orders" />: {developer.orders}
+          {t('seller.orders')}: {developer.orders}
         </p>
-        <p>{developer.headline}</p>
+        <p>{isVi ? developer.headlineVi : developer.headline}</p>
         <p>
           <small>
-            <Message id="common.joined" values={{ date: developer.joined }} />
+            {t('common.joined', { date: developer.joined })}
           </small>
         </p>
         <p className="developer-contact">
@@ -47,7 +50,7 @@ export function DeveloperCard({ developer }: { developer: Developer }) {
         className="primary developer-contact-button"
         href={`mailto:${developer.email}`}
       >
-        <Send size={16} /> <Message id="seller.contact" />
+        <Send size={16} /> {t('seller.contact')}
       </a>
     </article>
   );

@@ -1,11 +1,14 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, Star } from 'lucide-react';
 import type { Developer } from '@/data/developers';
-import { Message } from '@/shared/ui/message';
-import { TranslatedText } from '@/shared/ui/translated-text';
+import { useLocale } from '@/shared/ui/locale-provider';
 
 export function SellerSummaryCard({ seller }: { seller: Developer }) {
+  const { locale, t } = useLocale();
+
   return (
     <article className="seller-summary-card">
       <Image
@@ -24,29 +27,24 @@ export function SellerSummaryCard({ seller }: { seller: Developer }) {
           {seller.verified && (
             <span className="seller-verified">
               <span aria-hidden="true">✓</span>
-              <span className="sr-only">
-                <Message id="common.verifiedSeller" />
-              </span>
+              <span className="sr-only">{t('common.verifiedSeller')}</span>
             </span>
           )}
         </h3>
-        <p>
-          <TranslatedText en={seller.headline} vi={seller.headlineVi} />
-        </p>
+        <p>{locale === 'vi' ? seller.headlineVi : seller.headline}</p>
         <div className="seller-summary-card__stats">
           <span>
-            <b>{seller.products}</b> <Message id="seller.products" />
+            <b>{seller.products}</b> {t('seller.products')}
           </span>
           <span>
-            <b>{seller.views.toLocaleString('en-US')}</b>{' '}
-            <Message id="seller.views" />
+            <b>{seller.views.toLocaleString('en-US')}</b> {t('seller.views')}
           </span>
         </div>
         <Link
           className="seller-summary-card__link"
           href={`/developers/${seller.slug}`}
         >
-          <Message id="seller.viewProfile" /> <ArrowRight size={15} />
+          {t('seller.viewProfile')} <ArrowRight size={15} />
         </Link>
       </div>
     </article>

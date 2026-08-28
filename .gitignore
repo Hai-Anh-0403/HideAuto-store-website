@@ -20,6 +20,9 @@ dist/
 next-env.d.ts
 *.tsbuildinfo
 
+# Scratch & Agent artifacts
+scratch/
+
 # Tests, coverage, and reports
 coverage/
 test-results/

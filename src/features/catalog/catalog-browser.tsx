@@ -168,7 +168,7 @@ export function CatalogBrowser() {
 
   return (
     <div
-      className={`catalog-browser${filtersOpen ? 'catalog-browser--filters-open' : ''}`}
+      className={`catalog-browser${filtersOpen ? ' catalog-browser--filters-open' : ''}`}
     >
       <form className="catalog-search" onSubmit={submit}>
         <Search size={18} />
@@ -185,7 +185,7 @@ export function CatalogBrowser() {
       <div className="catalog-layout">
         <aside
           id="catalog-filters"
-          className={`catalog-filters${filtersOpen ? 'filters-open' : ''}`}
+          className={`catalog-filters${filtersOpen ? ' filters-open' : ''}`}
         >
           <div className="catalog-filter-scroll">
             <div className="filter-title">

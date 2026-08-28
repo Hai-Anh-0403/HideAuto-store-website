@@ -1,82 +1,58 @@
-import { Message } from '@/shared/ui/message';
+'use client';
+
+import { useLocale } from '@/shared/ui/locale-provider';
 
 export function LegalDocument({ type }: { type: 'policies' | 'terms' }) {
+  const { t } = useLocale();
   const isPolicies = type === 'policies';
+
   return (
-    <article className="legal-document">
+    <main className="shell section legal-page">
       <p className="label">
-        <Message id={isPolicies ? 'legal.policiesLabel' : 'legal.termsLabel'} />
+        {t(isPolicies ? 'legal.policiesLabel' : 'legal.termsLabel')}
       </p>
-      <h1>
-        <Message id={isPolicies ? 'legal.policiesTitle' : 'legal.termsTitle'} />
-      </h1>
+      <h1>{t(isPolicies ? 'legal.policiesTitle' : 'legal.termsTitle')}</h1>
       <p className="lead">
-        <Message
-          id={
-            isPolicies ? 'legal.policiesDescription' : 'legal.termsDescription'
-          }
-        />
+        {t(
+          isPolicies
+            ? 'legal.policiesDescription'
+            : 'legal.termsDescription',
+        )}
       </p>
-      <p className="legal-notice">
-        <Message id="legal.draftNotice" />
-      </p>
+      <div className="legal-notice">{t('legal.draftNotice')}</div>
       <div className="legal-sections">
         {isPolicies ? (
           <>
             <section>
-              <h2>
-                <Message id="legal.privacyTitle" />
-              </h2>
-              <p>
-                <Message id="legal.privacyDescription" />
-              </p>
+              <h2>{t('legal.privacyTitle')}</h2>
+              <p>{t('legal.privacyDescription')}</p>
             </section>
             <section>
-              <h2>
-                <Message id="legal.licenseTitle" />
-              </h2>
-              <p>
-                <Message id="legal.licenseDescription" />
-              </p>
+              <h2>{t('legal.licenseTitle')}</h2>
+              <p>{t('legal.licenseDescription')}</p>
             </section>
             <section>
-              <h2>
-                <Message id="legal.refundTitle" />
-              </h2>
-              <p>
-                <Message id="legal.refundDescription" />
-              </p>
+              <h2>{t('legal.refundTitle')}</h2>
+              <p>{t('legal.refundDescription')}</p>
             </section>
           </>
         ) : (
           <>
             <section>
-              <h2>
-                <Message id="legal.marketplaceTitle" />
-              </h2>
-              <p>
-                <Message id="legal.marketplaceDescription" />
-              </p>
+              <h2>{t('legal.marketplaceTitle')}</h2>
+              <p>{t('legal.marketplaceDescription')}</p>
             </section>
             <section>
-              <h2>
-                <Message id="legal.sellerTermsTitle" />
-              </h2>
-              <p>
-                <Message id="legal.sellerTermsDescription" />
-              </p>
+              <h2>{t('legal.sellerTermsTitle')}</h2>
+              <p>{t('legal.sellerTermsDescription')}</p>
             </section>
             <section>
-              <h2>
-                <Message id="legal.contactTitle" />
-              </h2>
-              <p>
-                <Message id="legal.contactDescription" />
-              </p>
+              <h2>{t('legal.contactTitle')}</h2>
+              <p>{t('legal.contactDescription')}</p>
             </section>
           </>
         )}
       </div>
-    </article>
+    </main>
   );
 }

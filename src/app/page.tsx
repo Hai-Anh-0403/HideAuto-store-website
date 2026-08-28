@@ -1,3 +1,5 @@
+'use client';
+
 import { ArrowRight, Check } from 'lucide-react';
 import Link from 'next/link';
 import { AdSlot } from '@/features/advertising/ad-slot';
@@ -7,21 +9,19 @@ import { developers } from '@/features/developers/data';
 import { SellerSummaryCard } from '@/features/developers/seller-summary-card';
 import { StoreHeader } from '@/shared/ui/store-header';
 import { StoreFooter } from '@/shared/ui/store-footer';
-import { Message } from '@/shared/ui/message';
-import { TranslatedText } from '@/shared/ui/translated-text';
+import { useLocale } from '@/shared/ui/locale-provider';
+import type { MessageKey } from '@/shared/i18n/messages';
 
 const rails = [
   {
     label: '02',
-    title: 'Top views',
-    titleVi: 'Xem nhiều nhất',
+    titleKey: 'catalog.topViews' as const,
     sort: 'views',
     items: [...scripts].sort((a, b) => b.views - a.views).slice(0, 6),
   },
   {
     label: '03',
-    title: 'Newest',
-    titleVi: 'Mới nhất',
+    titleKey: 'catalog.newest' as const,
     sort: 'newest',
     items: [...scripts]
       .sort((a, b) => b.updated.localeCompare(a.updated))
@@ -29,15 +29,13 @@ const rails = [
   },
   {
     label: '04',
-    title: 'Most watched',
-    titleVi: 'Được quan tâm nhất',
+    titleKey: 'catalog.mostWatched' as const,
     sort: 'watched',
     items: [...scripts].sort((a, b) => b.watches - a.watches).slice(0, 6),
   },
   {
     label: '05',
-    title: 'Recently updated',
-    titleVi: 'Cập nhật gần đây',
+    titleKey: 'catalog.recentlyUpdated' as const,
     sort: 'updated',
     items: [...scripts]
       .sort((a, b) => b.updated.localeCompare(a.updated))
@@ -45,31 +43,48 @@ const rails = [
   },
 ];
 
+const deliverySteps = [
+  {
+    num: '01',
+    titleKey: 'home.deliveryStep1Title' as const,
+    descKey: 'home.deliveryStep1Desc' as const,
+  },
+  {
+    num: '02',
+    titleKey: 'home.deliveryStep2Title' as const,
+    descKey: 'home.deliveryStep2Desc' as const,
+  },
+  {
+    num: '03',
+    titleKey: 'home.deliveryStep3Title' as const,
+    descKey: 'home.deliveryStep3Desc' as const,
+  },
+];
+
 function ScriptRail({
   label,
-  title,
-  titleVi,
+  titleKey,
   sort,
   items,
-}: (typeof rails)[number]) {
+}: {
+  label: string;
+  titleKey: MessageKey;
+  sort: string;
+  items: typeof scripts;
+}) {
+  const { t } = useLocale();
+
   return (
     <section className="shell section script-rail">
       <div className="heading">
         <div>
           <p className="label">
-            {label} /{' '}
-            <TranslatedText
-              en="DISCOVER SCRIPTS"
-              vi="KHÁM PHÁ KỊCH BẢN"
-            />
+            {label} / {t('home.discoverScripts')}
           </p>
-          <h2>
-            <TranslatedText en={title} vi={titleVi} />
-          </h2>
+          <h2>{t(titleKey)}</h2>
         </div>
         <Link href={`/scripts?sort=${sort}`}>
-          <TranslatedText en="View all" vi="Xem tất cả" />{' '}
-          <ArrowRight size={15} />
+          {t('common.viewAll')} <ArrowRight size={15} />
         </Link>
       </div>
       <div className="script-list-grid">
@@ -82,6 +97,8 @@ function ScriptRail({
 }
 
 export default function Page() {
+  const { t } = useLocale();
+
   return (
     <>
       <a className="skip" href="#main">
@@ -91,43 +108,32 @@ export default function Page() {
       <main id="main">
         <section className="shell hero">
           <p className="label">
-            01 / <TranslatedText en="SCRIPT MARKETPLACE" vi="CHỢ KỊCH BẢN" />
+            01 / {t('home.scriptMarketplace')}
           </p>
           <div className="hero-grid frame">
             <div>
-              <p className="label">
-                <TranslatedText
-                  en="AUTOMATION / DIRECT CONTACT"
-                  vi="TỰ ĐỘNG HÓA / LIÊN HỆ TRỰC TIẾP"
-                />
-              </p>
+              <p className="label">{t('home.automationDirectContact')}</p>
               <h1>
-                <Message id="home.heroLineOne" />
+                {t('home.heroLineOne')}
                 <br />
-                <Message id="home.heroLineTwo" />{' '}
-                <em>
-                  <Message id="home.heroEmphasis" />
-                </em>
+                {t('home.heroLineTwo')}{' '}
+                <em>{t('home.heroEmphasis')}</em>
               </h1>
-              <p className="lead">
-                <TranslatedText
-                  en="Find practical automation tools, compare the requirements, then contact the seller directly to discuss delivery."
-                  vi="Tìm công cụ tự động hóa thiết thực, so sánh yêu cầu rồi liên hệ trực tiếp người bán để trao đổi."
-                />
-              </p>
+              <p className="lead">{t('home.heroLead')}</p>
               <div className="actions">
                 <Link className="primary" href="/scripts">
-                  <TranslatedText en="Browse scripts" vi="Khám phá kịch bản" />{' '}
-                  <ArrowRight size={16} />
+                  {t('common.browseScripts')} <ArrowRight size={16} />
                 </Link>
               </div>
             </div>
             <div className="hero-featured">
-              <p className="label">
-                <Message id="home.featuredScripts" />
-              </p>
-              {scripts.slice(0, 4).map((script) => (
-                <ScriptListItem key={script.slug} script={script} />
+              <p className="label">{t('home.featuredScripts')}</p>
+              {scripts.slice(0, 4).map((script, index) => (
+                <ScriptListItem
+                  key={script.slug}
+                  script={script}
+                  priority={index < 2}
+                />
               ))}
             </div>
           </div>
@@ -146,15 +152,12 @@ export default function Page() {
           <div className="heading">
             <div>
               <p className="label">
-                06 / <Message id="home.hideAutoScripts" />
+                06 / {t('home.hideAutoScripts')}
               </p>
-              <h2>
-                <Message id="home.hideAutoScriptsTitle" />
-              </h2>
+              <h2>{t('home.hideAutoScriptsTitle')}</h2>
             </div>
             <Link href="/scripts">
-              <Message id="home.viewAllHideAutoScripts" />{' '}
-              <ArrowRight size={15} />
+              {t('home.viewAllHideAutoScripts')} <ArrowRight size={15} />
             </Link>
           </div>
           <div className="script-list-grid">
@@ -167,17 +170,12 @@ export default function Page() {
           <div className="heading">
             <div>
               <p className="label">
-                07 / <Message id="home.community" />
+                07 / {t('home.community')}
               </p>
-              <h2>
-                <TranslatedText
-                  en="Featured sellers."
-                  vi="Người bán tiêu biểu."
-                />
-              </h2>
+              <h2>{t('home.featuredSellersTitle')}</h2>
             </div>
             <Link href="/developers">
-              <Message id="seller.viewAll" /> <ArrowRight size={15} />
+              {t('seller.viewAll')} <ArrowRight size={15} />
             </Link>
           </div>
           <div className="seller-summary-grid">
@@ -189,48 +187,17 @@ export default function Page() {
         <section className="shell delivery" id="docs">
           <div>
             <p className="label">
-              08 / <Message id="home.clearDelivery" />
+              08 / {t('home.clearDelivery')}
             </p>
-            <h2>
-              <TranslatedText
-                en="What happens after you contact a seller."
-                vi="Điều gì xảy ra sau khi bạn liên hệ người bán."
-              />
-            </h2>
+            <h2>{t('home.afterContactTitle')}</h2>
           </div>
           <ol>
-            {[
-              [
-                '01',
-                'Compare requirements',
-                'So sánh yêu cầu',
-                'Check compatibility, available files, and the starting price.',
-                'Kiểm tra tính tương thích, tệp đi kèm và giá khởi điểm.',
-              ],
-              [
-                '02',
-                'Contact the seller',
-                'Liên hệ người bán',
-                'Send the script context and your questions in one request.',
-                'Gửi ngữ cảnh kịch bản và các câu hỏi của bạn trong một yêu cầu.',
-              ],
-              [
-                '03',
-                'Agree delivery',
-                'Thỏa thuận bàn giao',
-                'Discuss terms privately before any purchase happens.',
-                'Trao đổi riêng về các điều khoản trước khi tiến hành giao dịch.',
-              ],
-            ].map(([n, tEn, tVi, dEn, dVi]) => (
-              <li key={n}>
-                <span>{n}</span>
+            {deliverySteps.map(({ num, titleKey, descKey }) => (
+              <li key={num}>
+                <span>{num}</span>
                 <div>
-                  <h3>
-                    <TranslatedText en={tEn} vi={tVi} />
-                  </h3>
-                  <p>
-                    <TranslatedText en={dEn} vi={dVi} />
-                  </p>
+                  <h3>{t(titleKey)}</h3>
+                  <p>{t(descKey)}</p>
                 </div>
                 <Check size={17} />
               </li>
