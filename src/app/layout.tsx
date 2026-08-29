@@ -11,8 +11,6 @@ export const metadata: Metadata = {
   icons: { icon: '/images/icon.png', apple: '/images/icon.png' },
 };
 
-const validThemes: Theme[] = ['light', 'dark'];
-
 export default async function RootLayout({ children }: LayoutProps<'/'>) {
   const cookieStore = await cookies();
   const initialLocale = cookieStore.get('locale')?.value === 'vi' ? 'vi' : 'en';
@@ -20,7 +18,7 @@ export default async function RootLayout({ children }: LayoutProps<'/'>) {
   const initialTheme: Theme = themeCookie === 'dark' ? 'dark' : 'light';
 
   return (
-    <html lang={initialLocale} data-theme={initialTheme}>
+    <html lang={initialLocale} data-theme={initialTheme} data-scroll-behavior="smooth">
       <body>
         <ThemeProvider initialTheme={initialTheme}>
           <LocaleProvider initialLocale={initialLocale}>

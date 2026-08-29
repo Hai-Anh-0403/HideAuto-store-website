@@ -34,13 +34,21 @@ header {
 
 .brand > span {
   position: relative;
-  color: var(--ink);
+  color: var(--steel);
 }
 
 .brand > span::before {
   content: 'HIDE';
   position: absolute;
   left: 0;
+  color: var(--ink);
+}
+
+.brand-hide {
+  color: var(--ink);
+}
+
+.brand-auto {
   color: var(--steel);
 }
 

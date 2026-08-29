@@ -360,31 +360,49 @@
 
 .pager {
   display: flex;
-  gap: 6px;
-  margin-top: 22px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 32px 0;
+  font-family: 'JetBrains Mono', monospace;
 }
 
 .pager button {
-  width: 34px;
-  height: 34px;
+  min-width: 36px;
+  height: 36px;
+  padding: 0 10px;
   border: 1px solid var(--line);
-  background: transparent;
+  background: var(--panel);
   color: var(--ink);
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 150ms ease;
+  user-select: none;
 }
 
-.pager button.active {
-  background: var(--steel);
-  color: var(--bg);
+.pager button:hover:not(:disabled) {
   border-color: var(--steel);
+  color: var(--steel);
+}
+
+.pager button.active,
+.pager button[aria-current="page"] {
+  background: var(--steel) !important;
+  color: var(--bg) !important;
+  border-color: var(--steel) !important;
+  font-weight: 700 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
 
 .pager button:disabled {
-  opacity: 0.4;
+  opacity: 0.35;
   cursor: not-allowed;
+  border-color: var(--line);
 }
 
 /* Common cards & collections */
